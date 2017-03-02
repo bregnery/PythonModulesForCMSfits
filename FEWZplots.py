@@ -9,11 +9,11 @@
 # modules
 import ROOT as root
 import numpy
-import sys
 
 # import modules from other directories
-
 import style.histogramsettings as settings
+import fitting.rootpdfs as pdf
+import fitting.fitwithroot as fit
 
 # enter batch mode in root (so python can access displays)
 root.gROOT.SetBatch(True)
@@ -45,11 +45,21 @@ nctPhotonFullHist = root.TH1F("nctPhotonFullHist","",50,110,160)
 settings.setHistTitles(nctPhotonFullHist, "Dimuon Mass [GeV/c^{2}]", "Cross Section")
 
 # fill the histograms
-for num, xsec in zip(range(1,51),nctPhotonFull):
+for num, xsec in zip(range(1, nctPhotonFull.size),nctPhotonFull):
    nctPhotonFullHist.SetBinContent(num, xsec)
 
 # adjust histogram settings
 settings.setDataPoint(nctPhotonFullHist, root.kBlack, root.kFullDotLarge)
+
+#==================================================================================
+# Fit the Histograms //////////////////////////////////////////////////////////////
+#==================================================================================
+
+# specify number of fit parameters
+parameters = numpy.array([0.3, -1, -2, 0.5])
+
+# fit with root
+fit.fitTH1(nctPhotonFullHist, 110, 160, parameters, pdf.dimitripdf, "R", root.kRed)  
 
 #==================================================================================
 # Draw Plots //////////////////////////////////////////////////////////////////////
@@ -57,7 +67,7 @@ settings.setDataPoint(nctPhotonFullHist, root.kBlack, root.kFullDotLarge)
 
 # make a TCanvas and draw the histograms
 canvas = root.TCanvas()
-nctPhotonFullHist.Draw("P")
+nctPhotonFullHist.Draw("AP")
 
 # Save the Plots
 canvas.SaveAs("Hist_nctPhotonFull.png")
