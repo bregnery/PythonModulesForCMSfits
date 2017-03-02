@@ -4,9 +4,16 @@
 # This program reads data from a file and makes histograms ////////////////////////
 #==================================================================================
 
+# Give interpreter a search path
+
 # modules
 import ROOT as root
 import numpy
+import sys
+
+# import modules from other directories
+
+import style.histogramsettings as settings
 
 # enter batch mode in root (so python can access displays)
 root.gROOT.SetBatch(True)
@@ -27,21 +34,22 @@ nctMu26Full = fewzdata[:,5]
 # Make Histograms /////////////////////////////////////////////////////////////////
 #==================================================================================
 
+# Set style options
+settings.setSimpleStyle()
+
 # Stat Box options
 root.gStyle.SetOptStat(0)
 
-# make root histogram data files
+# make root histogram variables
 nctPhotonFullHist = root.TH1F("nctPhotonFullHist","",50,110,160)
-nctPhotonFullHist.GetXaxis().SetTitle("Dimuon Mass [GeV/c^{2}]")
-nctPhotonFullHist.GetYaxis().SetTitle("Cross Section")
+settings.setHistTitles(nctPhotonFullHist, "Dimuon Mass [GeV/c^{2}]", "Cross Section")
 
 # fill the histograms
 for num, xsec in zip(range(1,51),nctPhotonFull):
    nctPhotonFullHist.SetBinContent(num, xsec)
 
-# histogram data point settings
-nctPhotonFullHist.SetLineStyle(0)
-nctPhotonFullHist.SetMarkerStyle(8)
+# adjust histogram settings
+settings.setDataPoint(nctPhotonFullHist, root.kBlack, root.kFullDotLarge)
 
 #==================================================================================
 # Draw Plots //////////////////////////////////////////////////////////////////////
