@@ -56,10 +56,12 @@ settings.setDataPoint(nctPhotonFullHist, root.kBlack, root.kFullDotLarge)
 #==================================================================================
 
 # specify number of fit parameters
-parameters = numpy.array([0.3, -1, -2, 0.5])
+#parameters = numpy.array([0.3, -1, -2, 0.5])
+parameters = numpy.array([1, 110, 0.01])
 
 # fit with root
-fit.fitTH1(nctPhotonFullHist, 110, 160, parameters, pdf.dimitripdf, "R", root.kRed)  
+#fit.fitTH1(nctPhotonFullHist, 110, 160, parameters, pdf.dimitripdf, "R", root.kRed)  
+fit.fitTH1(nctPhotonFullHist, 110, 160, parameters, pdf.expopdf, "R", root.kRed)  
 
 #==================================================================================
 # Draw Plots //////////////////////////////////////////////////////////////////////
@@ -67,7 +69,7 @@ fit.fitTH1(nctPhotonFullHist, 110, 160, parameters, pdf.dimitripdf, "R", root.kR
 
 # make a TCanvas and draw the histograms
 canvas = root.TCanvas()
-nctPhotonFullHist.Draw("AP")
+nctPhotonFullHist.Draw("P")
 
 # Save the Plots
 canvas.SaveAs("Hist_nctPhotonFull.png")

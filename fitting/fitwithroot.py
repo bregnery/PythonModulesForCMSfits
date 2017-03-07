@@ -22,8 +22,7 @@ def fitTH1(hist, xmin, xmax, p, pdf, fittype, color):
    fitfunc = root.TF1("fitfunc", pdf, xmin, xmax, len(p))
    for position, value in zip(range(0,p.size), p):
       fitfunc.SetParameter(position, value)
-   fitfunc.GetParameter(3)
    fitfunc.SetLineColor(color)
-   hist.Fit(fitfunc, fittype)
+   hist.Fit("fitfunc", fittype)
 
 
