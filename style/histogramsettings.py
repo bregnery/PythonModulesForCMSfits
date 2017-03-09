@@ -80,6 +80,11 @@ def makeResidualHist(canvas, hist, xtitle, residualYtitle, stats, drawoption, re
    canvas.cd()
    canvas.SaveAs("ResidualHist_" + hist.GetName() + ".png")
 
+   # delete the histograms and TPads to avoid memory leaks
+   residualHist.Delete()
+   residualpad.Delete()
+   histopad.Delete()
+
 #==================================================================================
 # Set the histogram axis titles ///////////////////////////////////////////////////
 #----------------------------------------------------------------------------------

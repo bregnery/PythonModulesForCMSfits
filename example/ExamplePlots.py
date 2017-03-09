@@ -41,20 +41,15 @@ settings.setSimpleStyle()
 root.gStyle.SetOptStat(0)
 
 # make root histogram variables
-nctPhotonExpoFullHist = root.TH1F("nctPhotonExpoFullHist","Cross Section for NLO CT Full with FSR",50,110,160)
-settings.setHistTitles(nctPhotonExpoFullHist, "Dimuon Mass [GeV/c^{2}]", "Cross Section")
-
-nctPhotonChebyshevFullHist = root.TH1F("nctPhotonChebyshevFullHist","Cross Section for NLO CT Full with FSR",50,110,160)
-settings.setHistTitles(nctPhotonChebyshevFullHist, "Dimuon Mass [GeV/c^{2}]", "Cross Section")
+nctPhotonFullHist = root.TH1F("nctPhotonFullHist","Cross Section for NLO CT Full with FSR",50,110,160)
+settings.setHistTitles(nctPhotonFullHist, "Dimuon Mass [GeV/c^{2}]", "Cross Section")
 
 # fill the histograms
 for num, xsec in zip(range(1, nctPhotonFull.size),nctPhotonFull):
-   nctPhotonExpoFullHist.SetBinContent(num, xsec)
-   nctPhotonChebyshevFullHist.SetBinContent(num, xsec)
+   nctPhotonFullHist.SetBinContent(num, xsec)
 
 # adjust histogram settings
-settings.setDataPoint(nctPhotonExpoFullHist, root.kBlack, root.kFullDotLarge)
-settings.setDataPoint(nctPhotonChebyshevFullHist, root.kBlack, root.kFullDotLarge)
+settings.setDataPoint(nctPhotonFullHist, root.kBlack, root.kFullDotLarge)
 
 #==================================================================================
 # Fit the Histograms //////////////////////////////////////////////////////////////
@@ -63,29 +58,23 @@ settings.setDataPoint(nctPhotonChebyshevFullHist, root.kBlack, root.kFullDotLarg
 # specify number of fit parameters
 #parameters = numpy.array([0.3, -1, -2, 0.5])
 parameters = numpy.array([1, 110, 0.01])
-chebyshevParameters = numpy.array([30, -1, 0.005, -0.00001, 0.0000000001, -0.000000000001, 0.000000000001])
 
 # fit with root
 #fit.fitTH1(nctPhotonFullHist, 110, 160, parameters, pdf.dimitripdf, "R", root.kRed)  
-fitfunc = fit.fitTH1(nctPhotonExpoFullHist, 110, 160, parameters, pdf.expopdf, "R", root.kRed)  
-fitfuncChebyshev = fit.fitTH1(nctPhotonChebyshevFullHist, 110, 160, chebyshevParameters, pdf.chebyshev, "R", root.kRed)  
+fitfunc = fit.fitTH1(nctPhotonFullHist, 110, 160, parameters, pdf.expopdf, "R", root.kRed)  
 
 #==================================================================================
 # Draw Plots //////////////////////////////////////////////////////////////////////
 #==================================================================================
 
 # make a TCanvas and draw the histograms
-#canvas = root.TCanvas("canvas", "canvas")
+#canvas = root.TCanvas()
 #nctPhotonFullHist.Draw("P")
 
 # make a TCanvas and a histogram plot with residuals
-residualExpoCanvas = root.TCanvas("residualCanvas", "residualCanvas")
-settings.makeResidualHist(residualExpoCanvas, nctPhotonExpoFullHist, nctPhotonExpoFullHist.GetXaxis().GetTitle(), 
+residualCanvas = root.TCanvas("residualCanvas", "residualCanvas")
+settings.makeResidualHist(residualCanvas, nctPhotonFullHist, nctPhotonFullHist.GetXaxis().GetTitle(), 
                           "data - fit", 0, "P", root.kBlue, fitfunc)
-
-residualChebyshevCanvas = root.TCanvas("residualChebyshevCanvas", "residualChebyshevCanvas")
-settings.makeResidualHist(residualChebyshevCanvas, nctPhotonChebyshevFullHist, nctPhotonChebyshevFullHist.GetXaxis().GetTitle(), 
-                          "data - fit", 0, "P", root.kBlue, fitfuncChebyshev)
 
 # Save the Plots
 #canvas.SaveAs("Hist_nctPhotonFull.png")
