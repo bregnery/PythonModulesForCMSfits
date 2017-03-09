@@ -41,7 +41,7 @@ settings.setSimpleStyle()
 root.gStyle.SetOptStat(0)
 
 # make root histogram variables
-nctPhotonFullHist = root.TH1F("nctPhotonFullHist","",50,110,160)
+nctPhotonFullHist = root.TH1F("nctPhotonFullHist","Cross Section for NLO CT Full with FSR",50,110,160)
 settings.setHistTitles(nctPhotonFullHist, "Dimuon Mass [GeV/c^{2}]", "Cross Section")
 
 # fill the histograms
@@ -61,15 +61,21 @@ parameters = numpy.array([1, 110, 0.01])
 
 # fit with root
 #fit.fitTH1(nctPhotonFullHist, 110, 160, parameters, pdf.dimitripdf, "R", root.kRed)  
-fit.fitTH1(nctPhotonFullHist, 110, 160, parameters, pdf.expopdf, "R", root.kRed)  
+fitfunc = fit.fitTH1(nctPhotonFullHist, 110, 160, parameters, pdf.expopdf, "R", root.kRed)  
 
 #==================================================================================
 # Draw Plots //////////////////////////////////////////////////////////////////////
 #==================================================================================
 
 # make a TCanvas and draw the histograms
-canvas = root.TCanvas()
-nctPhotonFullHist.Draw("P")
+#canvas = root.TCanvas()
+#nctPhotonFullHist.Draw("P")
+
+# make a TCanvas and a histogram plot with residuals
+residualCanvas = root.TCanvas("residualCanvas", "residualCanvas")
+settings.makeResidualHist(residualCanvas, nctPhotonFullHist, nctPhotonFullHist.GetXaxis().GetTitle(), 
+                          "data - fit", 0, "P", root.kBlue, fitfunc)
 
 # Save the Plots
-canvas.SaveAs("Hist_nctPhotonFull.png")
+#canvas.SaveAs("Hist_nctPhotonFull.png")
+

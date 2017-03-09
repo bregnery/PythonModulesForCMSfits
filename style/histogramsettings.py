@@ -8,6 +8,79 @@
 import ROOT as root
 
 #==================================================================================
+# Make histograms with residuals //////////////////////////////////////////////////
+#----------------------------------------------------------------------------------
+# Axis titles are strings /////////////////////////////////////////////////////////
+# residualColor options are: kColor ///////////////////////////////////////////////
+# fitfunc is the fitted TF1 from a root fit ///////////////////////////////////////
+# stats is for statsbox the options are here: /////////////////////////////////////
+#   https://root.cern.ch/doc/master/classTPaveStats.html //////////////////////////
+# draw options are here: https://root.cern.ch/doc/master/classTHistPainter.html ///
+#----------------------------------------------------------------------------------
+
+def makeResidualHist(canvas, hist, xtitle, residualYtitle, stats, drawoption, residualColor, fitfunc):
+   # make the TPads that will contain each graph 
+   histopad = root.TPad("histopad", "histopad", 0.0, 0.33, 1.0, 1.0) # xlow, ylow, xup, yup
+   residualpad = root.TPad("residualpad", "residualpad", 0.0, 0.0, 1.0, 0.33)
+
+   # set margins for splitting canvas into two
+   histopad.SetBottomMargin(0.02)
+   histopad.SetTopMargin(0.12)
+   residualpad.SetTopMargin(0.02)
+   residualpad.SetBottomMargin(0.3)
+   residualpad.SetBorderMode(0)
+
+   # draw the histograms on the canvas
+   histopad.Draw()
+   residualpad.Draw()
+
+   # Plot the data and fit results
+   histopad.cd()
+   hist.SetStats(stats)
+   root.gStyle.SetTitleSize(0.08, "t") # moves title, not size, x title is default, need t for actual title
+   #root.gStyle.SetTitleOffset(0.5, "t")
+   hist.SetLabelSize(0.04)
+   hist.GetXaxis().SetLabelSize(0)
+   hist.Draw(drawoption)
+   histopad.Modified() # to make statsbox object
+   histopad.Update()
+   if stats != 0: # if you do want to include a stats box
+       statsbox = histo.FindObject("stats")
+       statsbox.SetY2NDC(0.6)
+       histopad.Modified() # to update statsbox location
+       histopad.Update()
+    
+   # Settings for the residuals
+   residualpad.cd()
+   residualHist = root.TH1F("resiualHist","", hist.GetNbinsX(), 
+                            hist.GetXaxis().GetXmin(), hist.GetXaxis().GetXmax() )
+   residualHist.SetFillColor(residualColor-1)
+   residualHist.SetLineColor(residualColor+1)
+   residualHist.GetXaxis().SetTitle(xtitle)
+   residualHist.GetXaxis().SetTitleSize(0.1)
+   residualHist.GetXaxis().SetTitleOffset(1.0)
+   residualHist.GetXaxis().SetLabelSize(0.09)
+   residualHist.GetYaxis().SetTitle(residualYtitle)
+   residualHist.GetYaxis().SetTitleSize(0.09)
+   residualHist.GetYaxis().SetTitleOffset(0.7)
+   residualHist.GetYaxis().SetLabelSize(0.08)
+
+   # Fill the residuals
+   for nbin in range(1, hist.GetNbinsX() ):
+      residual = hist.GetBinContent(nbin) - fitfunc.Eval(hist.GetBinCenter(nbin) )
+      residualHist.SetBinContent(nbin, residual)
+
+   # Plot the residuals
+   residualHist.SetStats(0)
+   residualHist.Draw()
+   residualpad.Modified()
+   residualpad.Update()
+
+   # save the plot
+   canvas.cd()
+   canvas.SaveAs("ResidualHist_" + hist.GetName() + ".png")
+
+#==================================================================================
 # Set the histogram axis titles ///////////////////////////////////////////////////
 #----------------------------------------------------------------------------------
 # Axis titles are strings /////////////////////////////////////////////////////////
