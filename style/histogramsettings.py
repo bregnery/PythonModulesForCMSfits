@@ -40,6 +40,7 @@ def makeResidualHist(canvas, hist, xtitle, residualYtitle, stats, drawoption, re
    root.gStyle.SetTitleSize(0.08, "t") # moves title, not size, x title is default, need t for actual title
    #root.gStyle.SetTitleOffset(0.5, "t")
    root.gStyle.SetOptFit(1101)
+   root.gStyle.SetErrorX(0.0001) # No X error
    hist.SetLabelSize(0.04)
    hist.GetXaxis().SetLabelSize(0)
    hist.Draw(drawoption)
@@ -95,6 +96,7 @@ def makeResidualHist(canvas, hist, xtitle, residualYtitle, stats, drawoption, re
 def setHistTitles(hist, xtitle, ytitle):
    hist.GetXaxis().SetTitle(xtitle)
    hist.GetYaxis().SetTitle(ytitle)
+   hist.Sumw2()
 
 #==================================================================================
 # Set the data point style and color //////////////////////////////////////////////

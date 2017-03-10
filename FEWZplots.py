@@ -28,6 +28,7 @@ fewzdata = numpy.loadtxt("LeadMu26-PhotonRecomb-13tev-xs", usecols=range(0,12) )
 # extract necessary information
 mass = fewzdata[:,0]
 nctPhotonFull = fewzdata[:,9]
+errorNctPhotonFull = fewzdata[:,10]
 nctMu26Full = fewzdata[:,5]
 
 #==================================================================================
@@ -51,10 +52,13 @@ nctPhotonDimitriFullHist = root.TH1F("nctPhotonDimitriFullHist","Cross Section f
 settings.setHistTitles(nctPhotonDimitriFullHist, "Dimuon Mass [GeV/c^{2}]", "Cross Section")
 
 # fill the histograms
-for num, xsec in zip(range(1, nctPhotonFull.size),nctPhotonFull):
+for num, xsec, error in zip(range(1, nctPhotonFull.size), nctPhotonFull, errorNctPhotonFull):
    nctPhotonExpoFullHist.SetBinContent(num, xsec)
+   nctPhotonExpoFullHist.SetBinError(num, error)
    nctPhotonChebyshevFullHist.SetBinContent(num, xsec)
+   nctPhotonChebyshevFullHist.SetBinError(num, error)
    nctPhotonDimitriFullHist.SetBinContent(num, xsec)
+   nctPhotonDimitriFullHist.SetBinError(num, error)
 
 # adjust histogram settings
 settings.setDataPoint(nctPhotonExpoFullHist, root.kBlack, root.kFullDotLarge)
@@ -66,9 +70,9 @@ settings.setDataPoint(nctPhotonDimitriFullHist, root.kBlack, root.kFullDotLarge)
 #==================================================================================
 
 # specify number of fit parameters
-parameters = numpy.array([0.00713606, 0.00469620, 0.00788091])
-chebyshevParameters = numpy.array([61.19, -1.32780, 0.00476652, -0.00000613831, 0.0000000105475, -0.000000000053423, 0.0000000000000786044])
-dimitriParameters = numpy.array([0.000000000737327, 10.9999, -0.383586, 0.000942102])
+parameters = numpy.array([216, -214, -0.00004]) #([0.007, 0.005, 0.008])
+chebyshevParameters = numpy.array([405, -12, 0.05, -0.00003, -0.0000005, 0.0000000015, -0.0000000000015]) #[62, -1.3, 0.005, -0.000006, 0.00000001, -0.00000000005, 0.00000000000007])
+dimitriParameters = numpy.array([0.0000000007, 11, -0.4, 0.0009])
 
 # fit with root
 fitfunc = fit.fitTH1(nctPhotonExpoFullHist, 110, 160, parameters, pdf.expopdf, "R", root.kRed)  
@@ -86,15 +90,15 @@ fitfuncDimitri = fit.fitTH1(nctPhotonDimitriFullHist, 110, 160, dimitriParameter
 # make a TCanvas and a histogram plot with residuals
 residualExpoCanvas = root.TCanvas("residualCanvas", "residualCanvas")
 settings.makeResidualHist(residualExpoCanvas, nctPhotonExpoFullHist, nctPhotonExpoFullHist.GetXaxis().GetTitle(), 
-                          "data - fit", 1, "P", root.kBlue, fitfunc)
+                          "data - fit", 1, "PE", root.kBlue, fitfunc)
 
 residualChebyshevCanvas = root.TCanvas("residualChebyshevCanvas", "residualChebyshevCanvas")
 settings.makeResidualHist(residualChebyshevCanvas, nctPhotonChebyshevFullHist, nctPhotonChebyshevFullHist.GetXaxis().GetTitle(), 
-                          "data - fit", 1, "P", root.kBlue, fitfuncChebyshev)
+                          "data - fit", 1, "PE", root.kBlue, fitfuncChebyshev)
 
 residualDimitriCanvas = root.TCanvas("residualDimitriCanvas", "residualDimitriCanvas")
 settings.makeResidualHist(residualDimitriCanvas, nctPhotonDimitriFullHist, nctPhotonDimitriFullHist.GetXaxis().GetTitle(), 
-                          "data - fit", 1, "P", root.kBlue, fitfuncDimitri)
+                          "data - fit", 1, "PE", root.kBlue, fitfuncDimitri)
 
 # Save the Plots
 #canvas.SaveAs("Hist_nctPhotonFull.png")
