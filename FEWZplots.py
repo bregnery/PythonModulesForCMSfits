@@ -66,13 +66,11 @@ settings.setDataPoint(nctPhotonDimitriFullHist, root.kBlack, root.kFullDotLarge)
 #==================================================================================
 
 # specify number of fit parameters
-#parameters = numpy.array([0.3, -1, -2, 0.5])
-parameters = numpy.array([0.0071, 0.141, 0.00788])
-chebyshevParameters = numpy.array([62, -1.33, 0.0047, -0.0000064, 0.00000001, -0.000000000056, 0.0000000000000769])
-dimitriParameters = numpy.array([0.00000000074, 11, -0.3837, 0.00094])
+parameters = numpy.array([0.00713606, 0.00469620, 0.00788091])
+chebyshevParameters = numpy.array([61.19, -1.32780, 0.00476652, -0.00000613831, 0.0000000105475, -0.000000000053423, 0.0000000000000786044])
+dimitriParameters = numpy.array([0.000000000737327, 10.9999, -0.383586, 0.000942102])
 
 # fit with root
-#fit.fitTH1(nctPhotonFullHist, 110, 160, parameters, pdf.dimitripdf, "R", root.kRed)  
 fitfunc = fit.fitTH1(nctPhotonExpoFullHist, 110, 160, parameters, pdf.expopdf, "R", root.kRed)  
 fitfuncChebyshev = fit.fitTH1(nctPhotonChebyshevFullHist, 110, 160, chebyshevParameters, pdf.chebyshev, "R", root.kRed)  
 fitfuncDimitri = fit.fitTH1(nctPhotonDimitriFullHist, 110, 160, dimitriParameters, pdf.dimitripdf, "R", root.kRed)  
@@ -88,15 +86,15 @@ fitfuncDimitri = fit.fitTH1(nctPhotonDimitriFullHist, 110, 160, dimitriParameter
 # make a TCanvas and a histogram plot with residuals
 residualExpoCanvas = root.TCanvas("residualCanvas", "residualCanvas")
 settings.makeResidualHist(residualExpoCanvas, nctPhotonExpoFullHist, nctPhotonExpoFullHist.GetXaxis().GetTitle(), 
-                          "data - fit", 0, "P", root.kBlue, fitfunc)
+                          "data - fit", 1, "P", root.kBlue, fitfunc)
 
 residualChebyshevCanvas = root.TCanvas("residualChebyshevCanvas", "residualChebyshevCanvas")
 settings.makeResidualHist(residualChebyshevCanvas, nctPhotonChebyshevFullHist, nctPhotonChebyshevFullHist.GetXaxis().GetTitle(), 
-                          "data - fit", 0, "P", root.kBlue, fitfuncChebyshev)
+                          "data - fit", 1, "P", root.kBlue, fitfuncChebyshev)
 
 residualDimitriCanvas = root.TCanvas("residualDimitriCanvas", "residualDimitriCanvas")
 settings.makeResidualHist(residualDimitriCanvas, nctPhotonDimitriFullHist, nctPhotonDimitriFullHist.GetXaxis().GetTitle(), 
-                          "data - fit", 0, "P", root.kBlue, fitfuncDimitri)
+                          "data - fit", 1, "P", root.kBlue, fitfuncDimitri)
 
 # Save the Plots
 #canvas.SaveAs("Hist_nctPhotonFull.png")

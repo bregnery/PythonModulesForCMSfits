@@ -39,14 +39,15 @@ def makeResidualHist(canvas, hist, xtitle, residualYtitle, stats, drawoption, re
    hist.SetStats(stats)
    root.gStyle.SetTitleSize(0.08, "t") # moves title, not size, x title is default, need t for actual title
    #root.gStyle.SetTitleOffset(0.5, "t")
+   root.gStyle.SetOptFit(1101)
    hist.SetLabelSize(0.04)
    hist.GetXaxis().SetLabelSize(0)
    hist.Draw(drawoption)
    histopad.Modified() # to make statsbox object
    histopad.Update()
    if stats != 0: # if you do want to include a stats box
-       statsbox = histo.FindObject("stats")
-       statsbox.SetY2NDC(0.6)
+       statsbox = hist.FindObject("stats")
+       statsbox.SetY2NDC(0.9)
        histopad.Modified() # to update statsbox location
        histopad.Update()
     

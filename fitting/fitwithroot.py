@@ -20,11 +20,12 @@ import rootpdfs
 #----------------------------------------------------------------------------------
 
 def fitTH1(hist, xmin, xmax, p, pdf, fittype, color):
-   root.gStyle.SetOptFit(0101) # shows the chi 2
+   root.gStyle.SetOptFit(1111) # shows the chi 2
    fitfunc = root.TF1("fitfunc", pdf, xmin, xmax, len(p))
    for position, value in zip(range(0,p.size), p):
       fitfunc.SetParameter(position, value)
    fitfunc.SetLineColor(color)
-   hist.Fit("fitfunc", fittype)
+   hist.Fit("fitfunc") #, fittype)
+   print "Chi Squared value: ", fitfunc.GetChisquare()
    return fitfunc
 
