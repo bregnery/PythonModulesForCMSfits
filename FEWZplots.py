@@ -86,7 +86,7 @@ parameters = numpy.array([0.0711, 4688, 0.0787])
 chebyshevParameters = numpy.array([405, -12, 0.05, -0.00003, -0.0000005, 0.0000000015, -0.0000000000015]) #[62, -1.3, 0.005, -0.000006, 0.00000001, -0.00000000005, 0.00000000000007])
 dimitriParameters = numpy.array([4688, 0.01, -0.079, 0.0001])
 bwExpoParameters = numpy.array([2.5, -0.0053])
-perExpoBwParameters = numpy.array([1.39, 0.46, -0.26])
+perExpoBwParameters = numpy.array([1.39, 0.46, 2])
 
 # fit with root
 fitfunc = fit.fitTH1(nctPhotonExpoFullHist, 110, 160, parameters, pdf.expopdf, "R", root.kRed)  
