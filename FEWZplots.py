@@ -81,19 +81,26 @@ settings.setDataPoint(nctPhotonPerExpoBwFullHist, root.kBlack, root.kFullDotLarg
 # Fit the Histograms //////////////////////////////////////////////////////////////
 #==================================================================================
 
-# specify number of fit parameters
+# initial values of fit parameters
 parameters = numpy.array([0.0711, 4688, 0.0787])
 chebyshevParameters = numpy.array([405, -12, 0.05, -0.00003, -0.0000005, 0.0000000015, -0.0000000000015]) #[62, -1.3, 0.005, -0.000006, 0.00000001, -0.00000000005, 0.00000000000007])
 dimitriParameters = numpy.array([4688, 0.01, -0.079, 0.0001])
 bwExpoParameters = numpy.array([2.5, -0.0053])
-perExpoBwParameters = numpy.array([1.39, 0.46, 2])
+perExpoBwParameters = numpy.array([1, 2, 0.46, 2])
+
+# parameter limits
+perExpoBwParLimits = numpy.array([[1, 1.5, 2.5]])
+
+# debug
+print "Parameter number : ", int(perExpoBwParLimits[0][0])
 
 # fit with root
 fitfunc = fit.fitTH1(nctPhotonExpoFullHist, 110, 160, parameters, pdf.expopdf, "R", root.kRed)  
 fitfuncChebyshev = fit.fitTH1(nctPhotonChebyshevFullHist, 110, 160, chebyshevParameters, pdf.chebyshev, "R", root.kRed)  
 fitfuncDimitri = fit.fitTH1(nctPhotonDimitriFullHist, 110, 160, dimitriParameters, pdf.dimitripdf, "R", root.kRed)  
 fitfuncBwExpo = fit.fitTH1(nctPhotonBwExpoFullHist, 110, 160, bwExpoParameters, pdf.bwExpo, "R", root.kRed)
-fitfuncPerExpoBw = fit.fitTH1(nctPhotonPerExpoBwFullHist, 110, 160, perExpoBwParameters, pdf.perExpoBw, "R", root.kRed)
+fitfuncPerExpoBw = fit.fitTH1withParLimits(nctPhotonPerExpoBwFullHist, 110, 160, perExpoBwParameters, pdf.perExpoBw, "R", root.kRed, 
+                              perExpoBwParLimits)
 
 #==================================================================================
 # Draw Plots //////////////////////////////////////////////////////////////////////

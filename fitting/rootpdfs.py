@@ -70,6 +70,6 @@ def bwExpo(x, p):
 #----------------------------------------------------------------------------------
 
 def perExpoBw(x, p):
-   perExpoBw = root.TMath.Exp(p[1]*(x[0]/100) + p[2]*root.TMath.Power((x[0]/100), 2) )/(root.TMath.Power((x[0]-91.2), p[0]) + root.TMath.Power((2.5/2), p[0]) )
+   perExpoBw = p[0]*root.TMath.Exp(p[2]*(x[0]/100) + p[3]*root.TMath.Power((x[0]/100), 2) )/(root.TMath.Power((x[0]-91.2), p[1]) + root.TMath.Power((2.5/2), p[1]) )
    return perExpoBw
 

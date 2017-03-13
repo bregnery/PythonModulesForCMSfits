@@ -16,6 +16,8 @@ import ROOT as root
 # stats is for statsbox the options are here: /////////////////////////////////////
 #   https://root.cern.ch/doc/master/classTPaveStats.html //////////////////////////
 # draw options are here: https://root.cern.ch/doc/master/classTHistPainter.html ///
+# residualYtitle is a string that has two options: "data - fit", //////////////////
+#   "(data - fit)/ data" //////////////////////////////////////////////////////////
 #----------------------------------------------------------------------------------
 
 def makeResidualHist(canvas, hist, xtitle, residualYtitle, stats, drawoption, residualColor, fitfunc):
@@ -68,9 +70,14 @@ def makeResidualHist(canvas, hist, xtitle, residualYtitle, stats, drawoption, re
    residualHist.GetYaxis().SetLabelSize(0.08)
 
    # Fill the residuals
-   for nbin in range(1, hist.GetNbinsX() ):
-      residual = hist.GetBinContent(nbin) - fitfunc.Eval(hist.GetBinCenter(nbin) )
-      residualHist.SetBinContent(nbin, residual)
+   if residualYtitle == "data - fit":
+       for nbin in range(1, hist.GetNbinsX() ):
+          residual = hist.GetBinContent(nbin) - fitfunc.Eval(hist.GetBinCenter(nbin) )
+          residualHist.SetBinContent(nbin, residual)
+   elif residualYtitle == "(data - fit)/ data":
+       for nbin in range(1, hist.GetNbinsX() ):
+          residual = (hist.GetBinContent(nbin) - fitfunc.Eval(hist.GetBinCenter(nbin) ) ) / hist.GetBinContent(nbin)
+          residualHist.SetBinContent(nbin, residual)
 
    # Plot the residuals
    residualHist.SetStats(0)

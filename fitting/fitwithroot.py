@@ -25,7 +25,23 @@ def fitTH1(hist, xmin, xmax, p, pdf, fittype, color):
    for position, value in zip(range(0,p.size), p):
       fitfunc.SetParameter(position, value)
    fitfunc.SetLineColor(color)
-   hist.Fit("fitfunc") #, fittype)
+   hist.Fit("fitfunc", fittype)
+   print "Chi Squared value: ", fitfunc.GetChisquare()
+   return fitfunc
+
+#----------------------------------------------------------------------------------
+# Same as above, but adds parameter limits, where plimits is a 2d array ///////////
+#----------------------------------------------------------------------------------
+
+def fitTH1withParLimits(hist, xmin, xmax, p, pdf, fittype, color, plimits):
+   root.gStyle.SetOptFit(1111) # shows the chi 2
+   fitfunc = root.TF1("fitfunc", pdf, xmin, xmax, len(p))
+   for position, value in zip(range(0, p.size), p):
+      fitfunc.SetParameter(position, value)
+   for row in range(0, len(plimits)):
+      fitfunc.SetParLimits(int(plimits[row][0]), plimits[row][1], plimits[row][2])
+   fitfunc.SetLineColor(color)
+   hist.Fit("fitfunc", fittype)
    print "Chi Squared value: ", fitfunc.GetChisquare()
    return fitfunc
 
