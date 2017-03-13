@@ -50,5 +50,26 @@ def chebyshev(x, p):
 #----------------------------------------------------------------------------------
 
 def expoGaus(x, p):
-   expoGaus = p[0]*root.TMath.Exp(-p[1]*x[0])*exp( root.TMath.Power((x[0]-p[2]), 2) / (2*root.TMath.Power(p[3], 2) ) )
+   expoGaus = p[0]*root.TMath.Exp(-p[1]*x[0])*root.TMath.Exp( root.TMath.Power((x[0]-p[2]), 2) / (2*root.TMath.Power(p[3], 2) ) )
    return expoGaus
+
+#==================================================================================
+# breit weigner mixture scaled by falling exp /////////////////////////////////////
+#----------------------------------------------------------------------------------
+# x is the independent variable and p are the parameters //////////////////////////
+#----------------------------------------------------------------------------------
+
+def bwExpo(x, p):
+   bwExpo = (p[0]*root.TMath.Exp(p[1]*x[0]) )/(root.TMath.Power((x[0]-91.2), 2) + root.TMath.Power((2.5/2), 2) ) + (1-p[0])*(root.TMath.Exp(p[1]*x[0]))/(root.TMath.Power(x[0], 2) )
+   return bwExpo
+
+#==================================================================================
+# perturbed exponential times breit weigner ///////////////////////////////////////
+#----------------------------------------------------------------------------------
+# x is the independent variable and p are the parameters //////////////////////////
+#----------------------------------------------------------------------------------
+
+def perExpoBw(x, p):
+   perExpoBw = root.TMath.Exp(p[1]*(x[0]/100) + p[2]*root.TMath.Power((x[0]/100), 2) )/(root.TMath.Power((x[0]-91.2), p[0]) + root.TMath.Power((2.5/2), 2) )
+   return perExpoBw
+

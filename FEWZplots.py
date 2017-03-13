@@ -51,6 +51,12 @@ settings.setHistTitles(nctPhotonChebyshevFullHist, "Dimuon Mass [GeV/c^{2}]", "C
 nctPhotonDimitriFullHist = root.TH1F("nctPhotonDimitriFullHist","Cross Section for NLO CT Full with FSR",50,110,160)
 settings.setHistTitles(nctPhotonDimitriFullHist, "Dimuon Mass [GeV/c^{2}]", "Cross Section")
 
+nctPhotonBwExpoFullHist = root.TH1F("nctPhotonBwExpoFullHist","Cross Section for NLO CT Full with FSR",50,110,160)
+settings.setHistTitles(nctPhotonBwExpoFullHist, "Dimuon Mass [GeV/c^{2}]", "Cross Section")
+
+nctPhotonPerExpoBwFullHist = root.TH1F("nctPhotonPerExpoBwFullHist","Cross Section for NLO CT Full with FSR",50,110,160)
+settings.setHistTitles(nctPhotonPerExpoBwFullHist, "Dimuon Mass [GeV/c^{2}]", "Cross Section")
+
 # fill the histograms
 for num, xsec, error in zip(range(1, nctPhotonFull.size), nctPhotonFull, errorNctPhotonFull):
    nctPhotonExpoFullHist.SetBinContent(num, xsec)
@@ -59,25 +65,35 @@ for num, xsec, error in zip(range(1, nctPhotonFull.size), nctPhotonFull, errorNc
    nctPhotonChebyshevFullHist.SetBinError(num, error)
    nctPhotonDimitriFullHist.SetBinContent(num, xsec)
    nctPhotonDimitriFullHist.SetBinError(num, error)
+   nctPhotonBwExpoFullHist.SetBinContent(num, xsec)
+   nctPhotonBwExpoFullHist.SetBinError(num, error)
+   nctPhotonPerExpoBwFullHist.SetBinContent(num, xsec)
+   nctPhotonPerExpoBwFullHist.SetBinError(num, error)
 
 # adjust histogram settings
 settings.setDataPoint(nctPhotonExpoFullHist, root.kBlack, root.kFullDotLarge)
 settings.setDataPoint(nctPhotonChebyshevFullHist, root.kBlack, root.kFullDotLarge)
 settings.setDataPoint(nctPhotonDimitriFullHist, root.kBlack, root.kFullDotLarge)
+settings.setDataPoint(nctPhotonBwExpoFullHist, root.kBlack, root.kFullDotLarge)
+settings.setDataPoint(nctPhotonPerExpoBwFullHist, root.kBlack, root.kFullDotLarge)
 
 #==================================================================================
 # Fit the Histograms //////////////////////////////////////////////////////////////
 #==================================================================================
 
 # specify number of fit parameters
-parameters = numpy.array([216, -214, -0.00004]) #([0.007, 0.005, 0.008])
+parameters = numpy.array([0.0711, 4688, 0.0787])
 chebyshevParameters = numpy.array([405, -12, 0.05, -0.00003, -0.0000005, 0.0000000015, -0.0000000000015]) #[62, -1.3, 0.005, -0.000006, 0.00000001, -0.00000000005, 0.00000000000007])
-dimitriParameters = numpy.array([0.0000000007, 11, -0.4, 0.0009])
+dimitriParameters = numpy.array([4688, 0.01, -0.079, 0.0001])
+bwExpoParameters = numpy.array([2.5, -0.0053])
+perExpoBwParameters = numpy.array([1.39, 0.46, -0.26])
 
 # fit with root
 fitfunc = fit.fitTH1(nctPhotonExpoFullHist, 110, 160, parameters, pdf.expopdf, "R", root.kRed)  
 fitfuncChebyshev = fit.fitTH1(nctPhotonChebyshevFullHist, 110, 160, chebyshevParameters, pdf.chebyshev, "R", root.kRed)  
 fitfuncDimitri = fit.fitTH1(nctPhotonDimitriFullHist, 110, 160, dimitriParameters, pdf.dimitripdf, "R", root.kRed)  
+fitfuncBwExpo = fit.fitTH1(nctPhotonBwExpoFullHist, 110, 160, bwExpoParameters, pdf.bwExpo, "R", root.kRed)
+fitfuncPerExpoBw = fit.fitTH1(nctPhotonPerExpoBwFullHist, 110, 160, perExpoBwParameters, pdf.perExpoBw, "R", root.kRed)
 
 #==================================================================================
 # Draw Plots //////////////////////////////////////////////////////////////////////
@@ -99,6 +115,14 @@ settings.makeResidualHist(residualChebyshevCanvas, nctPhotonChebyshevFullHist, n
 residualDimitriCanvas = root.TCanvas("residualDimitriCanvas", "residualDimitriCanvas")
 settings.makeResidualHist(residualDimitriCanvas, nctPhotonDimitriFullHist, nctPhotonDimitriFullHist.GetXaxis().GetTitle(), 
                           "data - fit", 1, "PE", root.kBlue, fitfuncDimitri)
+
+residualBwExpoCanvas = root.TCanvas("residualBwExpoCanvas", "residualBwExpoCanvas")
+settings.makeResidualHist(residualBwExpoCanvas, nctPhotonBwExpoFullHist, nctPhotonBwExpoFullHist.GetXaxis().GetTitle(), 
+                          "data - fit", 1, "PE", root.kBlue, fitfuncBwExpo)
+
+residualPerExpoBwCanvas = root.TCanvas("residualPerExpoBwCanvas", "residualPerExpoBwCanvas")
+settings.makeResidualHist(residualPerExpoBwCanvas, nctPhotonPerExpoBwFullHist, nctPhotonPerExpoBwFullHist.GetXaxis().GetTitle(), 
+                          "data - fit", 1, "PE", root.kBlue, fitfuncPerExpoBw)
 
 # Save the Plots
 #canvas.SaveAs("Hist_nctPhotonFull.png")
