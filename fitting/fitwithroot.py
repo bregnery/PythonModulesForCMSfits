@@ -22,7 +22,7 @@ import rootpdfs
 def fitTH1(hist, xmin, xmax, p, pdf, fittype, color):
    root.gStyle.SetOptFit(1111) # shows the chi 2
    fitfunc = root.TF1("fitfunc", pdf, xmin, xmax, len(p))
-   for position, value in zip(range(0,p.size), p):
+   for position, value in zip(range(len(p) ), p):
       fitfunc.SetParameter(position, value)
    fitfunc.SetLineColor(color)
    hist.Fit("fitfunc", fittype)
@@ -36,9 +36,9 @@ def fitTH1(hist, xmin, xmax, p, pdf, fittype, color):
 def fitTH1withParLimits(hist, xmin, xmax, p, pdf, fittype, color, plimits):
    root.gStyle.SetOptFit(1111) # shows the chi 2
    fitfunc = root.TF1("fitfunc", pdf, xmin, xmax, len(p))
-   for position, value in zip(range(0, p.size), p):
+   for position, value in zip(range(len(p) ), p):
       fitfunc.SetParameter(position, value)
-   for row in range(0, len(plimits)):
+   for row in range(len(plimits) ):
       fitfunc.SetParLimits(int(plimits[row][0]), plimits[row][1], plimits[row][2])
    fitfunc.SetLineColor(color)
    hist.Fit("fitfunc", fittype)

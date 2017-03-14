@@ -45,8 +45,10 @@ nctPhotonFullHist = root.TH1F("nctPhotonFullHist","Cross Section for NLO CT Full
 settings.setHistTitles(nctPhotonFullHist, "Dimuon Mass [GeV/c^{2}]", "Cross Section")
 
 # fill the histograms
-for num, xsec in zip(range(1, nctPhotonFull.size),nctPhotonFull):
-   nctPhotonFullHist.SetBinContent(num, xsec)
+for num, xsec in zip(range(len(nctPhotonFull) ),nctPhotonFull):
+   # bin numbers start at 1
+   binNum = num + 1
+   nctPhotonFullHist.SetBinContent(binNum, xsec)
 
 # adjust histogram settings
 settings.setDataPoint(nctPhotonFullHist, root.kBlack, root.kFullDotLarge)
