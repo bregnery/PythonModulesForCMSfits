@@ -116,20 +116,7 @@ def perExpoRelBw(x, p):
 def dimitriRelBw(x, p):
    xsqr = root.TMath.Power(x[0], 2)
    Msqr = root.TMath.Power(91.2, 2)
-   relBw = (xsqr*xsqr)/(root.TMath.Power(xsqr-Msqr, 2)+root.TMath.Power(xsqr, 2)*root.TMath.Power(2.5/2, 2)/Msqr )
+   relBw = (xsqr*xsqr)/(root.TMath.Power(xsqr-Msqr, 2)+root.TMath.Power(xsqr, 2)*root.TMath.Power(xsqr, 2)/Msqr )
    dimitriRelBw = (p[0]/xsqr)*relBw*root.TMath.Exp(p[1]*(x[0]/100) + p[2]*root.TMath.Power((x[0]/100), 2) )
    return dimitriRelBw
-
-#==================================================================================
-# modified version of Dimitri's relativistic breit wigner /////////////////////////
-#----------------------------------------------------------------------------------
-# x is the independent variable and p are the parameters //////////////////////////
-#----------------------------------------------------------------------------------
-
-def modDimitriRelBw(x, p):
-   xsqr = root.TMath.Power(x[0], 2)
-   Msqr = root.TMath.Power(91.2, 2)
-   relBw = (xsqr*xsqr)/(root.TMath.Power(xsqr-Msqr, p[1])+root.TMath.Power(xsqr, p[1])*root.TMath.Power(2.5/(2*91.2), p[1]) )
-   modDimitriRelBw = (p[0]/xsqr)*relBw*root.TMath.Exp(p[2]*(x[0]/100) + p[3]*root.TMath.Power((x[0]/100), 2) )
-   return modDimitriRelBw
 
