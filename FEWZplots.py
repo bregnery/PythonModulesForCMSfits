@@ -23,7 +23,7 @@ root.gROOT.SetBatch(True)
 #==================================================================================
 
 # read data from file into a numpy array
-fewzdata = numpy.loadtxt("LeadMu26-PhotonRecomb-13tev-xs", usecols=range(0,13) )
+fewzdata = numpy.loadtxt("LeadMu26-PhotonRecomb-13tev-xs", usecols=range(0,14) )
 
 # extract necessary information
 mass = fewzdata[:,0]
