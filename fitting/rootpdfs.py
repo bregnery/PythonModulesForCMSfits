@@ -44,7 +44,7 @@ def expopdf(x, p):
 #==================================================================================
 # Chebyshev Polynomials ///////////////////////////////////////////////////////////
 #----------------------------------------------------------------------------------
-# x is the independent variable and p are the parameters //////////////////////////
+# x is the independent variable and p are the coefficients ////////////////////////
 # the order of the the polynomials is determined by the  //////////////////////////
 # length of the vector p //////////////////////////////////////////////////////////
 #----------------------------------------------------------------------------------
@@ -52,6 +52,30 @@ def expopdf(x, p):
 def chebyshev(x, p):
    chebyshev = numpy.polynomial.chebyshev.chebval(x[0], p)
    return chebyshev
+
+#==================================================================================
+# Bernstein Polynomials ///////////////////////////////////////////////////////////
+#----------------------------------------------------------------------------------
+# x is the independent variable and p are the coefficients ////////////////////////
+# the order of the the polynomials is determined by the  //////////////////////////
+# length of the vector p //////////////////////////////////////////////////////////
+#----------------------------------------------------------------------------------
+
+def bernstein(x, p):
+   breakpoints = [110, 310] #160] # breakpoints need to be changed to region of interest
+   bPolynomial = numpy.zeros(len(p))
+   polyValue = numpy.zeros(len(p))
+   bPolynomial[0] = (breakpoints[1] - x[0]) / (breakpoints[1] - breakpoints[0])
+   bPolynomial[1] = (x[0] - breakpoints[0]) / (breakpoints[1] - breakpoints[0])
+   for i in range(2, len(p)):
+      bPolynomial[i] = (x[0] - breakpoints[0]) * bPolynomial[i-1] / (breakpoints[1] - breakpoints[0])
+      for j in range(i - 1, 0, -1):
+         bPolynomial[j] = ((breakpoints[1] - x[0]) * bPolynomial[j] + (x[0] - breakpoints[0]) * bPolynomial[j-1] ) / (breakpoints[1] - breakpoints[0])
+      bPolynomial[0] = (breakpoints[1] - x[0]) * bPolynomial[0] / (breakpoints[1] - breakpoints[0])
+   for i in range(len(p) ):
+      polyValue[i] = p[i] * bPolynomial[i]
+   bernstein = numpy.sum(polyValue)
+   return bernstein
 
 #==================================================================================
 # exponential x gaussian //////////////////////////////////////////////////////////
@@ -82,7 +106,7 @@ def bwExpo(x, p):
 def relBwExpo(x, p):
    xsqr = root.TMath.Power(x[0], 2)
    Msqr = root.TMath.Power(91.2, 2)
-   relBwExpo = (p[0]*root.TMath.Exp(p[1]*x[0]) )/(root.TMath.Power((xsqr-Msqr), 2) + root.TMath.Power(91.2*(2.5/2), 2) ) + (1-p[0])*(root.TMath.Exp(p[1]*x[0]))/(root.TMath.Power(x[0], 2) )
+   relBwExpo = (p[0]*root.TMath.Exp(p[1]*x[0]) )/(root.TMath.Power((xsqr-Msqr), 2) + root.TMath.Power(91.2*2.5, 2) ) + (1-p[0])*(root.TMath.Exp(p[1]*x[0]))/(root.TMath.Power(x[0], 2) )
    return relBwExpo
 
 #==================================================================================
@@ -104,7 +128,7 @@ def perExpoBw(x, p):
 def perExpoRelBw(x, p):
    xsqr = root.TMath.Power(x[0], 2)
    Msqr = root.TMath.Power(91.2, 2)
-   perExpoRelBw = p[0]*root.TMath.Exp(p[2]*(x[0]/100) + p[3]*root.TMath.Power((x[0]/100), 2) )/(root.TMath.Power((xsqr-Msqr), p[1]) + root.TMath.Power(91.2*(2.5/2), p[1]) )
+   perExpoRelBw = p[0]*root.TMath.Exp(p[2]*(x[0]/100) + p[3]*root.TMath.Power((x[0]/100), 2) )/(root.TMath.Power((xsqr-Msqr), p[1]) + root.TMath.Power(91.2*2.5, p[1]) )
    return perExpoRelBw
 
 #==================================================================================
@@ -116,7 +140,7 @@ def perExpoRelBw(x, p):
 def dimitriRelBw(x, p):
    xsqr = root.TMath.Power(x[0], 2)
    Msqr = root.TMath.Power(91.2, 2)
-   relBw = (xsqr*xsqr)/(root.TMath.Power(xsqr-Msqr, 2)+root.TMath.Power(xsqr, 2)*root.TMath.Power(2.5/2, 2)/Msqr )
+   relBw = (xsqr*xsqr)/(root.TMath.Power(xsqr-Msqr, 2)+root.TMath.Power(xsqr, 2)*root.TMath.Power(2.5, 2)/Msqr )
    dimitriRelBw = (p[0]/xsqr)*relBw*root.TMath.Exp(p[1]*(x[0]/100) + p[2]*root.TMath.Power((x[0]/100), 2) )
    return dimitriRelBw
 
@@ -129,7 +153,7 @@ def dimitriRelBw(x, p):
 def modDimitriRelBw(x, p):
    xsqr = root.TMath.Power(x[0], 2)
    Msqr = root.TMath.Power(91.2, 2)
-   relBw = (xsqr*xsqr)/(root.TMath.Power(xsqr-Msqr, p[1])+root.TMath.Power(xsqr, p[1])*root.TMath.Power(2.5/(2*91.2), p[1]) )
+   relBw = (xsqr*xsqr)/(root.TMath.Power(xsqr-Msqr, p[1])+root.TMath.Power(xsqr, p[1])*root.TMath.Power(2.5/(91.2), p[1]) )
    modDimitriRelBw = (p[0]/xsqr)*relBw*root.TMath.Exp(p[2]*(x[0]/100) + p[3]*root.TMath.Power((x[0]/100), 2) )
    return modDimitriRelBw
 

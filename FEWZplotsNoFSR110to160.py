@@ -47,6 +47,9 @@ settings.setHistTitles(nctMu26ExpoFullHist, "Dimuon Mass [GeV/c^{2}]", "Cross Se
 nctMu26ChebyshevFullHist = root.TH1F("nctMu26ChebyshevFullHist","Cross Section for NLO CT Full ",50,110,160)
 settings.setHistTitles(nctMu26ChebyshevFullHist, "Dimuon Mass [GeV/c^{2}]", "Cross Section")
 
+nctMu26BernsteinFullHist = root.TH1F("nctMu26BernsteinFullHist","Cross Section for NLO CT Full ",50,110,160)
+settings.setHistTitles(nctMu26BernsteinFullHist, "Dimuon Mass [GeV/c^{2}]", "Cross Section")
+
 nctMu26DimitriFullHist = root.TH1F("nctMu26DimitriFullHist","Cross Section for NLO CT Full ",50,110,160)
 settings.setHistTitles(nctMu26DimitriFullHist, "Dimuon Mass [GeV/c^{2}]", "Cross Section")
 
@@ -77,6 +80,8 @@ for num, xsec, error in zip(range(len(nctMu26Full) ), nctMu26Full, errorNctMu26F
    nctMu26ExpoFullHist.SetBinError(binNum, error)
    nctMu26ChebyshevFullHist.SetBinContent(binNum, xsec)
    nctMu26ChebyshevFullHist.SetBinError(binNum, error)
+   nctMu26BernsteinFullHist.SetBinContent(binNum, xsec)
+   nctMu26BernsteinFullHist.SetBinError(binNum, error)
    nctMu26DimitriFullHist.SetBinContent(binNum, xsec)
    nctMu26DimitriFullHist.SetBinError(binNum, error)
    nctMu26BwExpoFullHist.SetBinContent(binNum, xsec)
@@ -95,6 +100,7 @@ for num, xsec, error in zip(range(len(nctMu26Full) ), nctMu26Full, errorNctMu26F
 # adjust histogram settings
 settings.setDataPoint(nctMu26ExpoFullHist, root.kBlack, root.kFullDotLarge)
 settings.setDataPoint(nctMu26ChebyshevFullHist, root.kBlack, root.kFullDotLarge)
+settings.setDataPoint(nctMu26BernsteinFullHist, root.kBlack, root.kFullDotLarge)
 settings.setDataPoint(nctMu26DimitriFullHist, root.kBlack, root.kFullDotLarge)
 settings.setDataPoint(nctMu26BwExpoFullHist, root.kBlack, root.kFullDotLarge)
 settings.setDataPoint(nctMu26RelBwExpoFullHist, root.kBlack, root.kFullDotLarge)
@@ -109,7 +115,8 @@ settings.setDataPoint(nctMu26ModDimitriRelBwFullHist, root.kBlack, root.kFullDot
 
 # initial values of fit parameters
 parameters = numpy.array([0.0711, 4688, 0.0787])
-chebyshevParameters = numpy.array([396, -11.2, 0.0515, -0.000024, -0.0000005, 0.0000000015, -0.0000000000013]) #[62, -1.3, 0.005, -0.000006, 0.00000001, -0.00000000005, 0.00000000000007])
+chebyshevParameters = numpy.array([392, -11.1, 0.0514, -0.000025, -0.0000005, 0.0000000015, -0.0000000000013])
+bernsteinParameters = numpy.array([1, 1, 1, 1, 1, 1, 1]) #[396, -11.2, 0.0515, -0.000024, -0.0000005, 0.0000000015, -0.0000000000013]) #[62, -1.3, 0.005, -0.000006, 0.00000001, -0.00000000005, 0.00000000000007])
 dimitriParameters = numpy.array([0.2968, -0.7566, -2.261, 0.6513]) #[4688, 0.01, -0.079, 0.0001])
 bwExpoParameters = numpy.array([0.379, -0.0053])
 relBwExpoParameters = numpy.array([0.379, -0.0053])
@@ -123,12 +130,13 @@ perExpoBwParLimits = numpy.array([[1, 1.5, 2.5],[3, -0.6, -0.12]])
 perExpoRelBwParLimits = numpy.array([[1, 1.5, 2.5],[3, -1.2, -0.12]])
 dimitriRelBwParLimits = numpy.array([[2, -1.2, -0.12]])
 modDimitriRelBwParLimits = numpy.array([[1, 1.5, 2.5],[3, -1.2, -0.12]])
-chebyshevParLimits = numpy.array([[3, -0.0001, 0],[4, -0.000001, 0],[5, 0, 0.00000001],[6, -0.00000000001, 0]])
+chebyshevParLimits = numpy.array([[3, -0.0001, 0.0001],[4, -0.000001, 0.000001],[5, -0.00000001, 0.00000001],[6, -0.00000000001, 0.00000000001]])
 
 # fit with root
 fitfunc = fit.fitTH1(nctMu26ExpoFullHist, 110, 160, parameters, pdf.expopdf, "R", root.kRed)  
 fitfuncChebyshev = fit.fitTH1withParLimits(nctMu26ChebyshevFullHist, 110, 160, chebyshevParameters, pdf.chebyshev, "R", root.kRed,
                                            chebyshevParLimits)  
+fitfuncBernstein = fit.fitTH1(nctMu26BernsteinFullHist, 110, 160, bernsteinParameters, pdf.bernstein, "R", root.kRed)
 fitfuncDimitri = fit.fitTH1(nctMu26DimitriFullHist, 110, 160, dimitriParameters, pdf.modifiedDimitripdf, "R", root.kRed)  
 fitfuncBwExpo = fit.fitTH1(nctMu26BwExpoFullHist, 110, 160, bwExpoParameters, pdf.bwExpo, "R", root.kRed) 
 fitfuncRelBwExpo = fit.fitTH1(nctMu26RelBwExpoFullHist, 110, 160, relBwExpoParameters, pdf.relBwExpo, "R", root.kRed) 
@@ -153,6 +161,10 @@ settings.makeResidualHist(residualExpoCanvas, nctMu26ExpoFullHist, nctMu26ExpoFu
 residualChebyshevCanvas = root.TCanvas("residualChebyshevCanvas", "residualChebyshevCanvas")
 settings.makeResidualHist(residualChebyshevCanvas, nctMu26ChebyshevFullHist, nctMu26ChebyshevFullHist.GetXaxis().GetTitle(), 
                           "(data - fit)/ data", 1, "PE", root.kBlue, fitfuncChebyshev)
+
+residualBernsteinCanvas = root.TCanvas("residualBernsteinCanvas", "residualBernsteinCanvas")
+settings.makeResidualHist(residualBernsteinCanvas, nctMu26BernsteinFullHist, nctMu26BernsteinFullHist.GetXaxis().GetTitle(), 
+                          "(data - fit)/ data", 1, "PE", root.kBlue, fitfuncBernstein)
 
 residualDimitriCanvas = root.TCanvas("residualDimitriCanvas", "residualDimitriCanvas")
 settings.makeResidualHist(residualDimitriCanvas, nctMu26DimitriFullHist, nctMu26DimitriFullHist.GetXaxis().GetTitle(), 
