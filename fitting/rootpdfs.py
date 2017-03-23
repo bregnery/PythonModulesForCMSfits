@@ -42,6 +42,18 @@ def expopdf(x, p):
    return pdf
 
 #==================================================================================
+# Chebyshev Polynomials with NumPy ////////////////////////////////////////////////
+#----------------------------------------------------------------------------------
+# x is the independent variable and p are the coefficients ////////////////////////
+# the order of the the polynomials is determined by the  //////////////////////////
+# length of the vector p //////////////////////////////////////////////////////////
+#----------------------------------------------------------------------------------
+
+def chebyshevNumPy(x, p):
+   chebyshev = numpy.polynomial.chebyshev.chebval(x[0], p)
+   return chebyshev
+
+#==================================================================================
 # Chebyshev Polynomials ///////////////////////////////////////////////////////////
 #----------------------------------------------------------------------------------
 # x is the independent variable and p are the coefficients ////////////////////////
@@ -50,7 +62,15 @@ def expopdf(x, p):
 #----------------------------------------------------------------------------------
 
 def chebyshev(x, p):
-   chebyshev = numpy.polynomial.chebyshev.chebval(x[0], p)
+   FirstKind = numpy.zeros(len(p) )
+   FirstKindValue = numpy.zeros(len(p) )
+   FirstKind[0] = 1
+   FirstKind[1] = x[0]
+   for i in range(2, len(p) ):
+      FirstKind[i] = 2*x[0]*FirstKind[i-1] - FirstKind[i-2]
+   for i in range(len(p) ):
+      FirstKindValue[i] = p[i] * FirstKind[i]
+   chebyshev = numpy.sum(FirstKindValue)
    return chebyshev
 
 #==================================================================================
