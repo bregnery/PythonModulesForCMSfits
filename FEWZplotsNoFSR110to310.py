@@ -115,8 +115,8 @@ settings.setDataPoint(nctMu26for110to310ModDimitriRelBwFullHist, root.kBlack, ro
 
 # initial values of fit parameters
 parameters = numpy.array([0.0711, 4688, 0.0787])
-chebyshevParameters = numpy.array([2400, -18, 1.7, -0.16, 0.015, -0.0013, 0.00009, 0.0000016, -0.000004, 0.000002, -0.00000007])
-bernsteinParameters = numpy.array([3, 2, 1, 0.6, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5]) 
+chebyshevParameters = numpy.array([4000, -20, 4, -1, 0.3, -0.06, 0.02, -0.004, 0.0009, -0.0002, 0.00003, 0.000003, -0.000006, 0.000002, -0.000002, 0.000001])
+bernsteinParameters = numpy.array([1.8, -0.5, 1.5, -2, 3.8, -5.4, 6.9, -7, 6, -4, 2.2, -0.87, 0.3, -0.05, 0.02, 0.008]) 
 dimitriParameters = numpy.array([0.2968, -0.7566, -2.261, 0.6513]) #[4688, 0.01, -0.079, 0.0001])
 bwExpoParameters = numpy.array([0.379, -0.0053])
 relBwExpoParameters = numpy.array([0.379, -0.0053])

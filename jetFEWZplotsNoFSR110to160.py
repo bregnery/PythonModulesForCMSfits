@@ -109,7 +109,7 @@ settings.setDataPoint(nctMu26ModDimitriRelBw1jetHist, root.kBlack, root.kFullDot
 
 # initial values of fit parameters
 parameters = numpy.array([0.0711, 4688, 0.0787])
-chebyshevParameters = numpy.array([396, -11.2, 0.0515, -0.000024, -0.0000005, 0.0000000015, -0.0000000000013]) #[62, -1.3, 0.005, -0.000006, 0.00000001, -0.00000000005, 0.00000000000007])
+chebyshevParameters = numpy.array([2450.63, -18.2964, 1.70660, -0.158805, 0.0146300, -0.00129222, 0.0000933257, 0.00000176165, -0.00000408221, -0.00000132960, 0])
 dimitriParameters = numpy.array([0.2968, -0.7566, -2.261, 0.6513]) #[4688, 0.01, -0.079, 0.0001])
 bwExpoParameters = numpy.array([0.379, -0.0053])
 relBwExpoParameters = numpy.array([0.379, -0.0053])
@@ -123,12 +123,10 @@ perExpoBwParLimits = numpy.array([[1, 1.5, 2.5],[3, -1.2, -0.12]])
 perExpoRelBwParLimits = numpy.array([[1, 1.5, 2.5],[3, -1.2, -0.12]])
 dimitriRelBwParLimits = numpy.array([[2, -1.2, -0.12]])
 modDimitriRelBwParLimits = numpy.array([[1, 1.5, 2.5],[3, -1.2, -0.12]])
-chebyshevParLimits = numpy.array([[3, -0.0001, 0],[4, -0.000001, 0],[5, 0, 0.00000001],[6, -0.00000000001, 0]])
 
 # fit with root
 fitfunc = fit.fitTH1(nctMu26Expo1jetHist, 110, 160, parameters, pdf.expopdf, "R", root.kRed)  
-fitfuncChebyshev = fit.fitTH1withParLimits(nctMu26Chebyshev1jetHist, 110, 160, chebyshevParameters, pdf.chebyshev, "R", root.kRed,
-                                           chebyshevParLimits)  
+fitfuncChebyshev = fit.fitTH1(nctMu26Chebyshev1jetHist, 110, 160, chebyshevParameters, pdf.chebyshev, "R", root.kRed)  
 fitfuncDimitri = fit.fitTH1(nctMu26Dimitri1jetHist, 110, 160, dimitriParameters, pdf.modifiedDimitripdf, "R", root.kRed)  
 fitfuncBwExpo = fit.fitTH1(nctMu26BwExpo1jetHist, 110, 160, bwExpoParameters, pdf.bwExpo, "R", root.kRed) 
 fitfuncRelBwExpo = fit.fitTH1(nctMu26RelBwExpo1jetHist, 110, 160, relBwExpoParameters, pdf.relBwExpo, "R", root.kRed) 
