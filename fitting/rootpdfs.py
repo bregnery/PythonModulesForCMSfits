@@ -62,12 +62,14 @@ def chebyshevNumPy(x, p):
 #----------------------------------------------------------------------------------
 
 def chebyshev(x, p):
+   xNorm = (x[0] - 210) / 100 # normalize x so that x is an element of [-1,1]
+   #xNorm = (x[0] - 135) / 25 # normalize x so that x is an element of [-1,1]
    FirstKind = numpy.zeros(len(p) )
    FirstKindValue = numpy.zeros(len(p) )
    FirstKind[0] = 1
    FirstKind[1] = x[0]
    for i in range(2, len(p) ):
-      FirstKind[i] = 2*x[0]*FirstKind[i-1] - FirstKind[i-2]
+      FirstKind[i] = 2*xNorm*FirstKind[i-1] - FirstKind[i-2]
    for i in range(len(p) ):
       FirstKindValue[i] = p[i] * FirstKind[i]
    chebyshev = numpy.sum(FirstKindValue)

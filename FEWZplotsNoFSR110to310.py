@@ -23,7 +23,7 @@ root.gROOT.SetBatch(True)
 #==================================================================================
 
 # read data from file into a numpy array
-fewzdata = numpy.loadtxt("LeadMu26-HighMass-50bin-xs", usecols=range(0,8) )
+fewzdata = numpy.loadtxt("LeadMu26-HighMass-100bin-xs", usecols=range(0,8) )
 
 # extract necessary information
 mass = fewzdata[:,0]
@@ -41,34 +41,34 @@ settings.setSimpleStyle()
 root.gStyle.SetOptStat(0)
 
 # make root histogram variables
-nctMu26for110to310ExpoFullHist = root.TH1F("nctMu26for110to310ExpoFullHist","Cross Section for NLO CT Full ",50,110,310)
+nctMu26for110to310ExpoFullHist = root.TH1F("nctMu26for110to310ExpoFullHist","Cross Section for NLO CT Full ",100,110,310)
 settings.setHistTitles(nctMu26for110to310ExpoFullHist, "Dimuon Mass [GeV/c^{2}]", "Cross Section")
 
-nctMu26for110to310ChebyshevFullHist = root.TH1F("nctMu26for110to310ChebyshevFullHist","Cross Section for NLO CT Full ",50,110,310)
+nctMu26for110to310ChebyshevFullHist = root.TH1F("nctMu26for110to310ChebyshevFullHist","Cross Section for NLO CT Full ",100,110,310)
 settings.setHistTitles(nctMu26for110to310ChebyshevFullHist, "Dimuon Mass [GeV/c^{2}]", "Cross Section")
 
-nctMu26for110to310BernsteinFullHist = root.TH1F("nctMu26for110to310BernsteinFullHist","Cross Section for NLO CT Full ",50,110,310)
+nctMu26for110to310BernsteinFullHist = root.TH1F("nctMu26for110to310BernsteinFullHist","Cross Section for NLO CT Full ",100,110,310)
 settings.setHistTitles(nctMu26for110to310BernsteinFullHist, "Dimuon Mass [GeV/c^{2}]", "Cross Section")
 
-nctMu26for110to310DimitriFullHist = root.TH1F("nctMu26for110to310DimitriFullHist","Cross Section for NLO CT Full ",50,110,310)
+nctMu26for110to310DimitriFullHist = root.TH1F("nctMu26for110to310DimitriFullHist","Cross Section for NLO CT Full ",100,110,310)
 settings.setHistTitles(nctMu26for110to310DimitriFullHist, "Dimuon Mass [GeV/c^{2}]", "Cross Section")
 
-nctMu26for110to310BwExpoFullHist = root.TH1F("nctMu26for110to310BwExpoFullHist","Cross Section for NLO CT Full ",50,110,310)
+nctMu26for110to310BwExpoFullHist = root.TH1F("nctMu26for110to310BwExpoFullHist","Cross Section for NLO CT Full ",100,110,310)
 settings.setHistTitles(nctMu26for110to310BwExpoFullHist, "Dimuon Mass [GeV/c^{2}]", "Cross Section")
 
-nctMu26for110to310RelBwExpoFullHist = root.TH1F("nctMu26for110to310RelBwExpoFullHist","Cross Section for NLO CT Full ",50,110,310)
+nctMu26for110to310RelBwExpoFullHist = root.TH1F("nctMu26for110to310RelBwExpoFullHist","Cross Section for NLO CT Full ",100,110,310)
 settings.setHistTitles(nctMu26for110to310RelBwExpoFullHist, "Dimuon Mass [GeV/c^{2}]", "Cross Section")
 
-nctMu26for110to310PerExpoBwFullHist = root.TH1F("nctMu26for110to310PerExpoBwFullHist","Cross Section for NLO CT Full ",50,110,310)
+nctMu26for110to310PerExpoBwFullHist = root.TH1F("nctMu26for110to310PerExpoBwFullHist","Cross Section for NLO CT Full ",100,110,310)
 settings.setHistTitles(nctMu26for110to310PerExpoBwFullHist, "Dimuon Mass [GeV/c^{2}]", "Cross Section")
 
-nctMu26for110to310PerExpoRelBwFullHist = root.TH1F("nctMu26for110to310PerExpoRelBwFullHist","Cross Section for NLO CT Full ",50,110,310)
+nctMu26for110to310PerExpoRelBwFullHist = root.TH1F("nctMu26for110to310PerExpoRelBwFullHist","Cross Section for NLO CT Full ",100,110,310)
 settings.setHistTitles(nctMu26for110to310PerExpoRelBwFullHist, "Dimuon Mass [GeV/c^{2}]", "Cross Section")
 
-nctMu26for110to310DimitriRelBwFullHist = root.TH1F("nctMu26for110to310DimitriRelBwFullHist","Cross Section for NLO CT Full ",50,110,310)
+nctMu26for110to310DimitriRelBwFullHist = root.TH1F("nctMu26for110to310DimitriRelBwFullHist","Cross Section for NLO CT Full ",100,110,310)
 settings.setHistTitles(nctMu26for110to310DimitriRelBwFullHist, "Dimuon Mass [GeV/c^{2}]", "Cross Section")
 
-nctMu26for110to310ModDimitriRelBwFullHist = root.TH1F("nctMu26for110to310ModDimitriRelBwFullHist","Cross Section for NLO CT Full ",50,110,310)
+nctMu26for110to310ModDimitriRelBwFullHist = root.TH1F("nctMu26for110to310ModDimitriRelBwFullHist","Cross Section for NLO CT Full ",100,110,310)
 settings.setHistTitles(nctMu26for110to310ModDimitriRelBwFullHist, "Dimuon Mass [GeV/c^{2}]", "Cross Section")
 
 # fill the histograms
@@ -115,8 +115,8 @@ settings.setDataPoint(nctMu26for110to310ModDimitriRelBwFullHist, root.kBlack, ro
 
 # initial values of fit parameters
 parameters = numpy.array([0.0711, 4688, 0.0787])
-chebyshevParameters = numpy.array([396, -11.2, 0.0515, -0.000024, -0.0000005, 0.0000000015, -0.0000000000013]) #[62, -1.3, 0.005, -0.000006, 0.00000001, -0.00000000005, 0.00000000000007])
-bernsteinParameters = numpy.array([3, 2, 1, 0.6, 0.5, 0.5, 0.5]) 
+chebyshevParameters = numpy.array([2400, -18, 1.7, -0.16, 0.015, -0.0013, 0.00009, 0.0000016, -0.000004, 0.000002, -0.00000007])
+bernsteinParameters = numpy.array([3, 2, 1, 0.6, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5]) 
 dimitriParameters = numpy.array([0.2968, -0.7566, -2.261, 0.6513]) #[4688, 0.01, -0.079, 0.0001])
 bwExpoParameters = numpy.array([0.379, -0.0053])
 relBwExpoParameters = numpy.array([0.379, -0.0053])
@@ -130,12 +130,10 @@ perExpoBwParLimits = numpy.array([[1, 1.5, 2.5],[3, -0.6, 1.0]])
 perExpoRelBwParLimits = numpy.array([[1, 1.5, 2.5],[3, -1.2, 1.2]])
 dimitriRelBwParLimits = numpy.array([[2, -1.2, 1.2]])
 modDimitriRelBwParLimits = numpy.array([[1, 1.5, 2.5],[3, -1.2, 1.2]])
-chebyshevParLimits = numpy.array([[3, -0.0001, 0],[4, -0.000001, 0],[5, 0, 0.00000001],[6, -0.00000000001, 0]])
 
 # fit with root
 fitfunc = fit.fitTH1(nctMu26for110to310ExpoFullHist, 110, 310, parameters, pdf.expopdf, "R", root.kRed)  
-fitfuncChebyshev = fit.fitTH1withParLimits(nctMu26for110to310ChebyshevFullHist, 110, 310, chebyshevParameters, pdf.chebyshev, "R", root.kRed,
-                                           chebyshevParLimits)  
+fitfuncChebyshev = fit.fitTH1(nctMu26for110to310ChebyshevFullHist, 110, 310, chebyshevParameters, pdf.chebyshev, "R", root.kRed)  
 fitfuncBernstein = fit.fitTH1(nctMu26for110to310BernsteinFullHist, 110, 310, bernsteinParameters, pdf.bernstein, "R", root.kRed)  
 fitfuncDimitri = fit.fitTH1(nctMu26for110to310DimitriFullHist, 110, 310, dimitriParameters, pdf.modifiedDimitripdf, "R", root.kRed)  
 fitfuncBwExpo = fit.fitTH1(nctMu26for110to310BwExpoFullHist, 110, 310, bwExpoParameters, pdf.bwExpo, "R", root.kRed) 
@@ -156,44 +154,44 @@ fitfuncModDimitriRelBw = fit.fitTH1withParLimits(nctMu26for110to310ModDimitriRel
 # make a TCanvas and a histogram plot with residuals
 residualExpoCanvas = root.TCanvas("residualCanvas", "residualCanvas")
 settings.makeResidualHist(residualExpoCanvas, nctMu26for110to310ExpoFullHist, nctMu26for110to310ExpoFullHist.GetXaxis().GetTitle(), 
-                          "(data - fit)/ data", 1, "PE", root.kBlue, fitfunc)
+                          "(fewz - fit)/ fewz", 1, "PE", root.kBlue, fitfunc)
 
 residualChebyshevCanvas = root.TCanvas("residualChebyshevCanvas", "residualChebyshevCanvas")
 settings.makeResidualHist(residualChebyshevCanvas, nctMu26for110to310ChebyshevFullHist, nctMu26for110to310ChebyshevFullHist.GetXaxis().GetTitle(), 
-                          "(data - fit)/ data", 1, "PE", root.kBlue, fitfuncChebyshev)
+                          "(fewz - fit)/ fewz", 1, "PE", root.kBlue, fitfuncChebyshev)
 
 residualBernsteinCanvas = root.TCanvas("residualBernsteinCanvas", "residualBernsteinCanvas")
 settings.makeResidualHist(residualBernsteinCanvas, nctMu26for110to310BernsteinFullHist, nctMu26for110to310BernsteinFullHist.GetXaxis().GetTitle(), 
-                          "(data - fit)/ data", 1, "PE", root.kBlue, fitfuncBernstein)
+                          "(fewz - fit)/ fewz", 1, "PE", root.kBlue, fitfuncBernstein)
 
 residualDimitriCanvas = root.TCanvas("residualDimitriCanvas", "residualDimitriCanvas")
 settings.makeResidualHist(residualDimitriCanvas, nctMu26for110to310DimitriFullHist, nctMu26for110to310DimitriFullHist.GetXaxis().GetTitle(), 
-                          "(data - fit)/ data", 1, "PE", root.kBlue, fitfuncDimitri)
+                          "(fewz - fit)/ fewz", 1, "PE", root.kBlue, fitfuncDimitri)
 
 residualBwExpoCanvas = root.TCanvas("residualBwExpoCanvas", "residualBwExpoCanvas")
 settings.makeResidualHist(residualBwExpoCanvas, nctMu26for110to310BwExpoFullHist, nctMu26for110to310BwExpoFullHist.GetXaxis().GetTitle(), 
-                          "(data - fit)/ data", 1, "PE", root.kBlue, fitfuncBwExpo)
+                          "(fewz - fit)/ fewz", 1, "PE", root.kBlue, fitfuncBwExpo)
 
 residualRelBwExpoCanvas = root.TCanvas("residualRelBwExpoCanvas", "residualRelBwExpoCanvas")
 settings.makeResidualHist(residualRelBwExpoCanvas, nctMu26for110to310RelBwExpoFullHist, nctMu26for110to310RelBwExpoFullHist.GetXaxis().GetTitle(), 
-                          "(data - fit)/ data", 1, "PE", root.kBlue, fitfuncRelBwExpo)
+                          "(fewz - fit)/ fewz", 1, "PE", root.kBlue, fitfuncRelBwExpo)
 
 residualPerExpoBwCanvas = root.TCanvas("residualPerExpoBwCanvas", "residualPerExpoBwCanvas")
 settings.makeResidualHist(residualPerExpoBwCanvas, nctMu26for110to310PerExpoBwFullHist, nctMu26for110to310PerExpoBwFullHist.GetXaxis().GetTitle(), 
-                          "(data - fit)/ data", 1, "PE", root.kBlue, fitfuncPerExpoBw)
+                          "(fewz - fit)/ fewz", 1, "PE", root.kBlue, fitfuncPerExpoBw)
 
 residualPerExpoRelBwCanvas = root.TCanvas("residualPerExpoRelBwCanvas", "residualPerExpoRelBwCanvas")
 settings.makeResidualHist(residualPerExpoRelBwCanvas, nctMu26for110to310PerExpoRelBwFullHist, 
                           nctMu26for110to310PerExpoRelBwFullHist.GetXaxis().GetTitle(), 
-                          "(data - fit)/ data", 1, "PE", root.kBlue, fitfuncPerExpoRelBw)
+                          "(fewz - fit)/ fewz", 1, "PE", root.kBlue, fitfuncPerExpoRelBw)
 
 residualDimitriRelBwCanvas = root.TCanvas("residualDimitriRelBwCanvas", "residualDimitriRelBwCanvas")
 settings.makeResidualHist(residualDimitriRelBwCanvas, nctMu26for110to310DimitriRelBwFullHist, 
                           nctMu26for110to310DimitriRelBwFullHist.GetXaxis().GetTitle(), 
-                          "(data - fit)/ data", 1, "PE", root.kBlue, fitfuncDimitriRelBw)
+                          "(fewz - fit)/ fewz", 1, "PE", root.kBlue, fitfuncDimitriRelBw)
 
 residualModDimitriRelBwCanvas = root.TCanvas("residualModDimitriRelBwCanvas", "residualModDimitriRelBwCanvas")
 settings.makeResidualHist(residualModDimitriRelBwCanvas, nctMu26for110to310ModDimitriRelBwFullHist, 
                           nctMu26for110to310ModDimitriRelBwFullHist.GetXaxis().GetTitle(), 
-                          "(data - fit)/ data", 1, "PE", root.kBlue, fitfuncModDimitriRelBw)
+                          "(fewz - fit)/ fewz", 1, "PE", root.kBlue, fitfuncModDimitriRelBw)
 

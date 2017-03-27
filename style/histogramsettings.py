@@ -71,13 +71,21 @@ def makeResidualHist(canvas, hist, xtitle, residualYtitle, stats, drawoption, re
 
    # Fill the residuals
    if residualYtitle == "data - fit":
-       for nbin in range(1, hist.GetNbinsX() ):
-          residual = hist.GetBinContent(nbin) - fitfunc.Eval(hist.GetBinCenter(nbin) )
-          residualHist.SetBinContent(nbin, residual)
+      for nbin in range(1, hist.GetNbinsX() ):
+         residual = hist.GetBinContent(nbin) - fitfunc.Eval(hist.GetBinCenter(nbin) )
+         residualHist.SetBinContent(nbin, residual)
    elif residualYtitle == "(data - fit)/ data":
-       for nbin in range(1, hist.GetNbinsX() ):
-          residual = (hist.GetBinContent(nbin) - fitfunc.Eval(hist.GetBinCenter(nbin) ) ) / hist.GetBinContent(nbin)
-          residualHist.SetBinContent(nbin, residual)
+      for nbin in range(1, hist.GetNbinsX() ):
+         residual = (hist.GetBinContent(nbin) - fitfunc.Eval(hist.GetBinCenter(nbin) ) ) / hist.GetBinContent(nbin)
+         residualHist.SetBinContent(nbin, residual)
+   elif residualYtitle == "fewz - fit":
+      for nbin in range(1, hist.GetNbinsX() ):
+         residual = hist.GetBinContent(nbin) - fitfunc.Eval(hist.GetBinCenter(nbin) )
+         residualHist.SetBinContent(nbin, residual)
+   elif residualYtitle == "(fewz - fit)/ fewz":
+      for nbin in range(1, hist.GetNbinsX() ):
+         residual = (hist.GetBinContent(nbin) - fitfunc.Eval(hist.GetBinCenter(nbin) ) ) / hist.GetBinContent(nbin)
+         residualHist.SetBinContent(nbin, residual)
 
    # Plot the residuals
    residualHist.SetStats(0)

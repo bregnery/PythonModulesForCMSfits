@@ -148,40 +148,40 @@ fitfuncModDimitriRelBw = fit.fitTH1withParLimits(nctMu26ModDimitriRelBw1jetHist,
 # make a TCanvas and a histogram plot with residuals
 residualExpoCanvas = root.TCanvas("residualCanvas", "residualCanvas")
 settings.makeResidualHist(residualExpoCanvas, nctMu26Expo1jetHist, nctMu26Expo1jetHist.GetXaxis().GetTitle(), 
-                          "(data - fit)/ data", 1, "PE", root.kBlue, fitfunc)
+                          "(fewz - fit)/ fewz", 1, "PE", root.kBlue, fitfunc)
 
 residualChebyshevCanvas = root.TCanvas("residualChebyshevCanvas", "residualChebyshevCanvas")
 settings.makeResidualHist(residualChebyshevCanvas, nctMu26Chebyshev1jetHist, nctMu26Chebyshev1jetHist.GetXaxis().GetTitle(), 
-                          "(data - fit)/ data", 1, "PE", root.kBlue, fitfuncChebyshev)
+                          "(fewz - fit)/ fewz", 1, "PE", root.kBlue, fitfuncChebyshev)
 
 residualDimitriCanvas = root.TCanvas("residualDimitriCanvas", "residualDimitriCanvas")
 settings.makeResidualHist(residualDimitriCanvas, nctMu26Dimitri1jetHist, nctMu26Dimitri1jetHist.GetXaxis().GetTitle(), 
-                          "(data - fit)/ data", 1, "PE", root.kBlue, fitfuncDimitri)
+                          "(fewz - fit)/ fewz", 1, "PE", root.kBlue, fitfuncDimitri)
 
 residualBwExpoCanvas = root.TCanvas("residualBwExpoCanvas", "residualBwExpoCanvas")
 settings.makeResidualHist(residualBwExpoCanvas, nctMu26BwExpo1jetHist, nctMu26BwExpo1jetHist.GetXaxis().GetTitle(), 
-                          "(data - fit)/ data", 1, "PE", root.kBlue, fitfuncBwExpo)
+                          "(fewz - fit)/ fewz", 1, "PE", root.kBlue, fitfuncBwExpo)
 
 residualRelBwExpoCanvas = root.TCanvas("residualRelBwExpoCanvas", "residualRelBwExpoCanvas")
 settings.makeResidualHist(residualRelBwExpoCanvas, nctMu26RelBwExpo1jetHist, nctMu26RelBwExpo1jetHist.GetXaxis().GetTitle(), 
-                          "(data - fit)/ data", 1, "PE", root.kBlue, fitfuncRelBwExpo)
+                          "(fewz - fit)/ fewz", 1, "PE", root.kBlue, fitfuncRelBwExpo)
 
 residualPerExpoBwCanvas = root.TCanvas("residualPerExpoBwCanvas", "residualPerExpoBwCanvas")
 settings.makeResidualHist(residualPerExpoBwCanvas, nctMu26PerExpoBw1jetHist, nctMu26PerExpoBw1jetHist.GetXaxis().GetTitle(), 
-                          "(data - fit)/ data", 1, "PE", root.kBlue, fitfuncPerExpoBw)
+                          "(fewz - fit)/ fewz", 1, "PE", root.kBlue, fitfuncPerExpoBw)
 
 residualPerExpoRelBwCanvas = root.TCanvas("residualPerExpoRelBwCanvas", "residualPerExpoRelBwCanvas")
 settings.makeResidualHist(residualPerExpoRelBwCanvas, nctMu26PerExpoRelBw1jetHist, 
                           nctMu26PerExpoRelBw1jetHist.GetXaxis().GetTitle(), 
-                          "(data - fit)/ data", 1, "PE", root.kBlue, fitfuncPerExpoRelBw)
+                          "(fewz - fit)/ fewz", 1, "PE", root.kBlue, fitfuncPerExpoRelBw)
 
 residualDimitriRelBwCanvas = root.TCanvas("residualDimitriRelBwCanvas", "residualDimitriRelBwCanvas")
 settings.makeResidualHist(residualDimitriRelBwCanvas, nctMu26DimitriRelBw1jetHist, 
                           nctMu26DimitriRelBw1jetHist.GetXaxis().GetTitle(), 
-                          "(data - fit)/ data", 1, "PE", root.kBlue, fitfuncDimitriRelBw)
+                          "(fewz - fit)/ fewz", 1, "PE", root.kBlue, fitfuncDimitriRelBw)
 
 residualModDimitriRelBwCanvas = root.TCanvas("residualModDimitriRelBwCanvas", "residualModDimitriRelBwCanvas")
 settings.makeResidualHist(residualModDimitriRelBwCanvas, nctMu26ModDimitriRelBw1jetHist, 
                           nctMu26ModDimitriRelBw1jetHist.GetXaxis().GetTitle(), 
-                          "(data - fit)/ data", 1, "PE", root.kBlue, fitfuncModDimitriRelBw)
+                          "(fewz - fit)/ fewz", 1, "PE", root.kBlue, fitfuncModDimitriRelBw)
 

@@ -20,13 +20,17 @@ import rootpdfs
 #----------------------------------------------------------------------------------
 
 def fitTH1(hist, xmin, xmax, p, pdf, fittype, color):
+   print "The Function Root is Fitting is ", pdf
    root.gStyle.SetOptFit(1111) # shows the chi 2
    fitfunc = root.TF1("fitfunc", pdf, xmin, xmax, len(p))
    for position, value in zip(range(len(p) ), p):
       fitfunc.SetParameter(position, value)
    fitfunc.SetLineColor(color)
-   hist.Fit("fitfunc", fittype)
+   fitResults = hist.Fit("fitfunc", fittype)
    print "Chi Squared value: ", fitfunc.GetChisquare()
+   if fittype == "S":
+      print "The Covariance (Error) Matrix and Correlation Matrix: "
+      root.gMinuit.mnmatu(1) # calculates the correlation matrix
    return fitfunc
 
 #----------------------------------------------------------------------------------
