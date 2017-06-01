@@ -1,7 +1,7 @@
 PythonModulesForCMSfits
 =======================
 
-This repository contains python modules useful for fitting with root and for CMS plot styles
+This repository contains python modules useful for fitting with root and for CMS plot styles.
 
 Installation Instructions
 =========================
@@ -13,7 +13,7 @@ Clone this git repository.
 Dependencies
 ============
 
-In order to use the programs in this repository, the following are required: Python, ROOT: Data Analysis Framework, PyROOT (https://root.cern.ch/pyroot), and numpy (python package).
+In order to use the programs in this repository, the following are required: Python, ROOT: Data Analysis Framework, PyROOT (https://root.cern.ch/pyroot), and numpy (python package). All of these dependencies are included in a CMSSW environment.
 
 Local Run Instructions
 ======================

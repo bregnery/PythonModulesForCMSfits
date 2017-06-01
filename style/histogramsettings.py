@@ -96,6 +96,7 @@ def makeResidualHist(canvas, hist, xtitle, residualYtitle, stats, drawoption, re
    # save the plot
    canvas.cd()
    canvas.SaveAs("ResidualHist_" + hist.GetName() + ".png")
+   canvas.SaveAs("ResidualHist_" + hist.GetName() + ".pdf")
 
    # delete the histograms and TPads to avoid memory leaks
    residualHist.Delete()

@@ -42,34 +42,34 @@ root.gStyle.SetOptStat(0)
 
 # make root histogram variables
 nctMu26ExpoFullHist = root.TH1F("nctMu26ExpoFullHist","Cross Section for NLO CT Full ",50,110,160)
-settings.setHistTitles(nctMu26ExpoFullHist, "Dimuon Mass [GeV/c^{2}]", "Cross Section")
+settings.setHistTitles(nctMu26ExpoFullHist, "Dimuon Mass [GeV/c^{2}]", "Cross Section [pb]")
 
 nctMu26ChebyshevFullHist = root.TH1F("nctMu26ChebyshevFullHist","Cross Section for NLO CT Full ",50,110,160)
-settings.setHistTitles(nctMu26ChebyshevFullHist, "Dimuon Mass [GeV/c^{2}]", "Cross Section")
+settings.setHistTitles(nctMu26ChebyshevFullHist, "Dimuon Mass [GeV/c^{2}]", "Cross Section [pb]")
 
 nctMu26BernsteinFullHist = root.TH1F("nctMu26BernsteinFullHist","Cross Section for NLO CT Full ",50,110,160)
-settings.setHistTitles(nctMu26BernsteinFullHist, "Dimuon Mass [GeV/c^{2}]", "Cross Section")
+settings.setHistTitles(nctMu26BernsteinFullHist, "Dimuon Mass [GeV/c^{2}]", "Cross Section [pb]")
 
 nctMu26DimitriFullHist = root.TH1F("nctMu26DimitriFullHist","Cross Section for NLO CT Full ",50,110,160)
-settings.setHistTitles(nctMu26DimitriFullHist, "Dimuon Mass [GeV/c^{2}]", "Cross Section")
+settings.setHistTitles(nctMu26DimitriFullHist, "Dimuon Mass [GeV/c^{2}]", "Cross Section [pb]")
 
 nctMu26BwExpoFullHist = root.TH1F("nctMu26BwExpoFullHist","Cross Section for NLO CT Full ",50,110,160)
-settings.setHistTitles(nctMu26BwExpoFullHist, "Dimuon Mass [GeV/c^{2}]", "Cross Section")
+settings.setHistTitles(nctMu26BwExpoFullHist, "Dimuon Mass [GeV/c^{2}]", "Cross Section [pb]")
 
 nctMu26RelBwExpoFullHist = root.TH1F("nctMu26RelBwExpoFullHist","Cross Section for NLO CT Full ",50,110,160)
-settings.setHistTitles(nctMu26RelBwExpoFullHist, "Dimuon Mass [GeV/c^{2}]", "Cross Section")
+settings.setHistTitles(nctMu26RelBwExpoFullHist, "Dimuon Mass [GeV/c^{2}]", "Cross Section [pb]")
 
 nctMu26PerExpoBwFullHist = root.TH1F("nctMu26PerExpoBwFullHist","Cross Section for NLO CT Full ",50,110,160)
-settings.setHistTitles(nctMu26PerExpoBwFullHist, "Dimuon Mass [GeV/c^{2}]", "Cross Section")
+settings.setHistTitles(nctMu26PerExpoBwFullHist, "Dimuon Mass [GeV/c^{2}]", "Cross Section [pb]")
 
 nctMu26PerExpoRelBwFullHist = root.TH1F("nctMu26PerExpoRelBwFullHist","Cross Section for NLO CT Full ",50,110,160)
-settings.setHistTitles(nctMu26PerExpoRelBwFullHist, "Dimuon Mass [GeV/c^{2}]", "Cross Section")
+settings.setHistTitles(nctMu26PerExpoRelBwFullHist, "Dimuon Mass [GeV/c^{2}]", "Cross Section [pb]")
 
 nctMu26DimitriRelBwFullHist = root.TH1F("nctMu26DimitriRelBwFullHist","Cross Section for NLO CT Full ",50,110,160)
-settings.setHistTitles(nctMu26DimitriRelBwFullHist, "Dimuon Mass [GeV/c^{2}]", "Cross Section")
+settings.setHistTitles(nctMu26DimitriRelBwFullHist, "Dimuon Mass [GeV/c^{2}]", "Cross Section [pb]")
 
 nctMu26ModDimitriRelBwFullHist = root.TH1F("nctMu26ModDimitriRelBwFullHist","Cross Section for NLO CT Full ",50,110,160)
-settings.setHistTitles(nctMu26ModDimitriRelBwFullHist, "Dimuon Mass [GeV/c^{2}]", "Cross Section")
+settings.setHistTitles(nctMu26ModDimitriRelBwFullHist, "Dimuon Mass [GeV/c^{2}]", "Cross Section [pb]")
 
 # fill the histograms
 for num, xsec, error in zip(range(len(nctMu26Full) ), nctMu26Full, errorNctMu26Full):
