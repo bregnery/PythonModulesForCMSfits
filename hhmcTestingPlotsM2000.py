@@ -24,20 +24,20 @@ root.gROOT.SetBatch(True)
 #==================================================================================
 
 # read data from file into a numpy array
-leadJetSDmass = root_numpy.root2array("Radion_HH_wwww_FWLite.root","AnalysisTree","LeadAK8Jet_softdrop_mass")
-leadJetPt = root_numpy.root2array("Radion_HH_wwww_FWLite.root","AnalysisTree","LeadAK8Jet_pt")
-leadJetEta = root_numpy.root2array("Radion_HH_wwww_FWLite.root","AnalysisTree","LeadAK8Jet_eta")
-leadJetPhi = root_numpy.root2array("Radion_HH_wwww_FWLite.root","AnalysisTree","LeadAK8Jet_phi")
-leadJetMass = root_numpy.root2array("Radion_HH_wwww_FWLite.root","AnalysisTree","LeadAK8Jet_mass")
+leadJetSDmass = root_numpy.root2array("Radion_HH_wwww_M2000_FWLite.root","AnalysisTree","LeadAK8Jet_softdrop_mass")
+leadJetPt = root_numpy.root2array("Radion_HH_wwww_M2000_FWLite.root","AnalysisTree","LeadAK8Jet_pt")
+leadJetEta = root_numpy.root2array("Radion_HH_wwww_M2000_FWLite.root","AnalysisTree","LeadAK8Jet_eta")
+leadJetPhi = root_numpy.root2array("Radion_HH_wwww_M2000_FWLite.root","AnalysisTree","LeadAK8Jet_phi")
+leadJetMass = root_numpy.root2array("Radion_HH_wwww_M2000_FWLite.root","AnalysisTree","LeadAK8Jet_mass")
 
-subleadJetSDmass = root_numpy.root2array("Radion_HH_wwww_FWLite.root","AnalysisTree","SubLeadAK8Jet_softdrop_mass")
-subleadJetPt = root_numpy.root2array("Radion_HH_wwww_FWLite.root","AnalysisTree","SubLeadAK8Jet_pt")
-subleadJetEta = root_numpy.root2array("Radion_HH_wwww_FWLite.root","AnalysisTree","SubLeadAK8Jet_eta")
-subleadJetPhi = root_numpy.root2array("Radion_HH_wwww_FWLite.root","AnalysisTree","SubLeadAK8Jet_phi")
-subleadJetMass = root_numpy.root2array("Radion_HH_wwww_FWLite.root","AnalysisTree","SubLeadAK8Jet_mass")
+subleadJetSDmass = root_numpy.root2array("Radion_HH_wwww_M2000_FWLite.root","AnalysisTree","SubLeadAK8Jet_softdrop_mass")
+subleadJetPt = root_numpy.root2array("Radion_HH_wwww_M2000_FWLite.root","AnalysisTree","SubLeadAK8Jet_pt")
+subleadJetEta = root_numpy.root2array("Radion_HH_wwww_M2000_FWLite.root","AnalysisTree","SubLeadAK8Jet_eta")
+subleadJetPhi = root_numpy.root2array("Radion_HH_wwww_M2000_FWLite.root","AnalysisTree","SubLeadAK8Jet_phi")
+subleadJetMass = root_numpy.root2array("Radion_HH_wwww_M2000_FWLite.root","AnalysisTree","SubLeadAK8Jet_mass")
 
-nJets = root_numpy.root2array("Radion_HH_wwww_FWLite.root","AnalysisTree","nJetsAK8")
-nVertices = root_numpy.root2array("Radion_HH_wwww_FWLite.root","AnalysisTree","nPrimaryVertices")
+nJets = root_numpy.root2array("Radion_HH_wwww_M2000_FWLite.root","AnalysisTree","nJetsAK8")
+nVertices = root_numpy.root2array("Radion_HH_wwww_M2000_FWLite.root","AnalysisTree","nPrimaryVertices")
 
 #print(subleadJetPt)
 
@@ -52,41 +52,38 @@ settings.setSimpleStyle()
 root.gStyle.SetOptStat(0)
 
 # make root histogram variables
-leadJetSDMassHist = root.TH1F("leadJetSDMassHist","Leading AK8 Jet SoftDrop Mass",30,0,300)
+leadJetSDMassHist = root.TH1F("leadJetSDMassHist","Leading Jet SoftDrop Mass",30,0,300)
 settings.setHistTitles(leadJetSDMassHist, "SoftDrop Mass [GeV/c^{2}]", "Number of Events")
 
-leadJetPtHist = root.TH1F("leadJetPtHist","Leading AK8 Jet Pt",30,0,2500)
+leadJetPtHist = root.TH1F("leadJetPtHist","Leading Jet Pt",30,0,2500)
 settings.setHistTitles(leadJetPtHist, "p_{T} [GeV/c]", "Number of Events")
 
-leadJetEtaHist = root.TH1F("leadJetEtaHist","Leading AK8 Jet |#eta|",20,0,5)
+leadJetEtaHist = root.TH1F("leadJetEtaHist","Leading Jet |#eta|",20,0,5)
 settings.setHistTitles(leadJetEtaHist, "|#eta|", "Number of Events")
 
-leadJetPhiHist = root.TH1F("leadJetPhiHist","Leading AK8 Jet #phi",15,-3.5,3.5)
+leadJetPhiHist = root.TH1F("leadJetPhiHist","Leading Jet #phi",15,-3.5,3.5)
 settings.setHistTitles(leadJetPhiHist, "#phi", "Number of Events")
 
-leadJetMassHist = root.TH1F("leadJetMassHist","Leading AK8 Jet 4 Vector Mass",30,0,300)
+leadJetMassHist = root.TH1F("leadJetMassHist","Leading Jet 4 Vector Mass",30,0,300)
 settings.setHistTitles(leadJetMassHist, "Mass [GeV/c^{2}]", "Number of Events")
 
-subleadJetSDMassHist = root.TH1F("subleadJetSDMassHist","Subleading AK8 Jet SoftDrop Mass",30,0,300)
+subleadJetSDMassHist = root.TH1F("subleadJetSDMassHist","Subleading Jet SoftDrop Mass",30,0,300)
 settings.setHistTitles(subleadJetSDMassHist, "SoftDrop Mass [GeV/c^{2}]", "Number of Events")
 
-subleadJetSDMassZoomHist = root.TH1F("subleadJetSDMassZoomHist","Subleading AK8 Jet SoftDrop Mass",30,0,30)
-settings.setHistTitles(subleadJetSDMassZoomHist, "SoftDrop Mass [GeV/c^{2}]", "Number of Events")
-
-subleadJetPtHist = root.TH1F("subleadJetPtHist","Subleading AK8 Jet Pt",30,0,2000)
+subleadJetPtHist = root.TH1F("subleadJetPtHist","Subleading Jet Pt",30,0,2000)
 settings.setHistTitles(subleadJetPtHist, "p_{T} [GeV/c]", "Number of Events")
 
-subleadJetEtaHist = root.TH1F("subleadJetEtaHist","Subleading AK8 Jet |#eta|",20,0,5)
+subleadJetEtaHist = root.TH1F("subleadJetEtaHist","Subleading Jet |#eta|",20,0,5)
 settings.setHistTitles(subleadJetEtaHist, "|#eta|", "Number of Events")
 
-subleadJetPhiHist = root.TH1F("subleadJetPhiHist","Subleading AK8 Jet #phi",15,-3.5,3.5)
+subleadJetPhiHist = root.TH1F("subleadJetPhiHist","Subleading Jet #phi",15,-3.5,3.5)
 settings.setHistTitles(subleadJetPhiHist, "#phi", "Number of Events")
 
-subleadJetMassHist = root.TH1F("subleadJetMassHist","Subleading AK8 Jet 4 Vector Mass",30,0,300)
+subleadJetMassHist = root.TH1F("subleadJetMassHist","Subleading Jet 4 Vector Mass",30,0,300)
 settings.setHistTitles(subleadJetMassHist, "Mass [GeV/c^{2}]", "Number of Events")
 
-nJetsHist = root.TH1F("nJetsHist","Number of AK8 Jets",8,-0.5,7.5)
-settings.setHistTitles(nJetsHist, "Number of AK8 Jets", "Number of Events")
+nJetsHist = root.TH1F("nJetsHist","Number of Jets",8,-0.5,7.5)
+settings.setHistTitles(nJetsHist, "Number of Jets", "Number of Events")
 
 nVerticesHist = root.TH1F("nVerticesHist","Number of Primary Vertices",51,-0.5,50.5)
 settings.setHistTitles(nVerticesHist, "Number of Vertices", "Number of Events")
@@ -100,7 +97,6 @@ for event in range(len(leadJetSDmass) ):
    leadJetMassHist.Fill(leadJetMass[event])
 
    subleadJetSDMassHist.Fill(subleadJetSDmass[event])
-   subleadJetSDMassZoomHist.Fill(subleadJetSDmass[event])
    subleadJetPtHist.Fill(subleadJetPt[event])
    subleadJetEtaHist.Fill(numpy.absolute(subleadJetEta[event]))
    subleadJetPhiHist.Fill(subleadJetPhi[event])
@@ -117,7 +113,6 @@ settings.setFillOptions(leadJetPhiHist, root.kBlue, 1, 2, 1)
 settings.setFillOptions(leadJetMassHist, root.kBlue, 1, 2, 1)
 
 settings.setFillOptions(subleadJetSDMassHist, root.kBlue, 1, 2, 1)
-settings.setFillOptions(subleadJetSDMassZoomHist, root.kBlue, 1, 2, 1)
 settings.setFillOptions(subleadJetPtHist, root.kBlue, 1, 2, 1)
 settings.setFillOptions(subleadJetEtaHist, root.kBlue, 1, 2, 1)
 settings.setFillOptions(subleadJetPhiHist, root.kBlue, 1, 2, 1)
@@ -161,9 +156,6 @@ leadJetMassHist.Draw("hist")
 subleadJetSDMassCanvas = root.TCanvas()
 subleadJetSDMassHist.Draw("hist")
 
-subleadJetSDMassZoomCanvas = root.TCanvas()
-subleadJetSDMassZoomHist.Draw("hist")
-
 subleadJetPtCanvas = root.TCanvas()
 subleadJetPtHist.Draw("hist")
 
@@ -188,19 +180,18 @@ nVerticesHist.Draw("hist")
 #                          "data - fit", 0, "P", root.kBlue, fitfunc)
 
 # Save the Plots
-canvas.SaveAs("Hist_LeadJetSDmass.png")
-leadJetPtCanvas.SaveAs("Hist_LeadJetPt.png")
-leadJetEtaCanvas.SaveAs("Hist_LeadJetEta.png")
-leadJetPhiCanvas.SaveAs("Hist_LeadJetPhi.png")
-leadJetMassCanvas.SaveAs("Hist_LeadJetMass.png")
+canvas.SaveAs("Hist_M2000_LeadJetSDmass.png")
+leadJetPtCanvas.SaveAs("Hist_M2000_LeadJetPt.png")
+leadJetEtaCanvas.SaveAs("Hist_M2000_LeadJetEta.png")
+leadJetPhiCanvas.SaveAs("Hist_M2000_LeadJetPhi.png")
+leadJetMassCanvas.SaveAs("Hist_M2000_LeadJetMass.png")
 
-subleadJetSDMassCanvas.SaveAs("Hist_SubLeadJetSDmass.png")
-subleadJetSDMassZoomCanvas.SaveAs("Hist_SubLeadJetSDmassZoom.png")
-subleadJetPtCanvas.SaveAs("Hist_SubLeadJetPt.png")
-subleadJetEtaCanvas.SaveAs("Hist_SubLeadJetEta.png")
-subleadJetPhiCanvas.SaveAs("Hist_SubLeadJetPhi.png")
-subleadJetMassCanvas.SaveAs("Hist_SubLeadJetMass.png")
+subleadJetSDMassCanvas.SaveAs("Hist_M2000_SubLeadJetSDmass.png")
+subleadJetPtCanvas.SaveAs("Hist_M2000_SubLeadJetPt.png")
+subleadJetEtaCanvas.SaveAs("Hist_M2000_SubLeadJetEta.png")
+subleadJetPhiCanvas.SaveAs("Hist_M2000_SubLeadJetPhi.png")
+subleadJetMassCanvas.SaveAs("Hist_M2000_SubLeadJetMass.png")
 
-nJetsCanvas.SaveAs("Hist_nJets.png")
-nVerticesCanvas.SaveAs("Hist_nVertices.png")
+nJetsCanvas.SaveAs("Hist_M2000_nJets.png")
+nVerticesCanvas.SaveAs("Hist_M2000_nVertices.png")
 	

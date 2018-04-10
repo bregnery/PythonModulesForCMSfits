@@ -22,5 +22,5 @@ Examples for using this program are located in the examples directory. To use th
 
     python ExamplePlots.py
 
-The example programs can be used as a template to create more advanced fitting programs (like those in FEWZplots.py).
+The example programs can be used as a template to create more advanced fitting programs (like those in FEWZplots.py and hhmcTestingPlots.py).
 

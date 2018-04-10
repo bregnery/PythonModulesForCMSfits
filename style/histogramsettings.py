@@ -200,7 +200,7 @@ def setSimpleStyle():
    root.gStyle.SetTitleSize(0.045,"Y")
   
    root.gStyle.SetTitleOffset(1.4,"X")
-   root.gStyle.SetTitleOffset(1.4,"Y")
+   root.gStyle.SetTitleOffset(1.85,"Y")
   
    root.gStyle.SetTextSize(0.055)
    root.gStyle.SetTextFont(42)
