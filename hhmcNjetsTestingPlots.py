@@ -59,7 +59,32 @@ genHiggs2pt = root_numpy.root2array("Radion_HH_wwww_FWLite.root","AnalysisTree",
 genHiggs2phi = root_numpy.root2array("Radion_HH_wwww_FWLite.root","AnalysisTree","GenHiggs2_phi")
 genHiggs2eta = root_numpy.root2array("Radion_HH_wwww_FWLite.root","AnalysisTree","GenHiggs2_eta")
 
+genW1pt = root_numpy.root2array("Radion_HH_wwww_FWLite.root","AnalysisTree","GenW1_pt")
+genW1phi = root_numpy.root2array("Radion_HH_wwww_FWLite.root","AnalysisTree","GenW1_phi")
+genW1eta = root_numpy.root2array("Radion_HH_wwww_FWLite.root","AnalysisTree","GenW1_eta")
+genW1mass = root_numpy.root2array("Radion_HH_wwww_FWLite.root","AnalysisTree","GenW1_mass")
+
+genW2pt = root_numpy.root2array("Radion_HH_wwww_FWLite.root","AnalysisTree","GenW2_pt")
+genW2phi = root_numpy.root2array("Radion_HH_wwww_FWLite.root","AnalysisTree","GenW2_phi")
+genW2eta = root_numpy.root2array("Radion_HH_wwww_FWLite.root","AnalysisTree","GenW2_eta")
+genW2mass = root_numpy.root2array("Radion_HH_wwww_FWLite.root","AnalysisTree","GenW2_mass")
+
+genW3pt = root_numpy.root2array("Radion_HH_wwww_FWLite.root","AnalysisTree","GenW3_pt")
+genW3phi = root_numpy.root2array("Radion_HH_wwww_FWLite.root","AnalysisTree","GenW3_phi")
+genW3eta = root_numpy.root2array("Radion_HH_wwww_FWLite.root","AnalysisTree","GenW3_eta")
+genW3mass = root_numpy.root2array("Radion_HH_wwww_FWLite.root","AnalysisTree","GenW3_mass")
+
+genW4pt = root_numpy.root2array("Radion_HH_wwww_FWLite.root","AnalysisTree","GenW4_pt")
+genW4phi = root_numpy.root2array("Radion_HH_wwww_FWLite.root","AnalysisTree","GenW4_phi")
+genW4eta = root_numpy.root2array("Radion_HH_wwww_FWLite.root","AnalysisTree","GenW4_eta")
+genW4mass = root_numpy.root2array("Radion_HH_wwww_FWLite.root","AnalysisTree","GenW4_mass")
+
+virW1mass = root_numpy.root2array("Radion_HH_wwww_FWLite.root","AnalysisTree","virGenW1_mass")
+
+virW2mass = root_numpy.root2array("Radion_HH_wwww_FWLite.root","AnalysisTree","virGenW2_mass")
+
 nGenHiggs = root_numpy.root2array("Radion_HH_wwww_FWLite.root","AnalysisTree","nGenHiggs")
+nGenWs = root_numpy.root2array("Radion_HH_wwww_FWLite.root","AnalysisTree","nGenWs")
 nJets = root_numpy.root2array("Radion_HH_wwww_FWLite.root","AnalysisTree","nJetsAK8")
 nJetsAK4 = root_numpy.root2array("Radion_HH_wwww_FWLite.root","AnalysisTree","nJets")
 nVertices = root_numpy.root2array("Radion_HH_wwww_FWLite.root","AnalysisTree","nPrimaryVertices")
@@ -108,6 +133,16 @@ settings.setHistTitles(subleadJetPhiHist, "#phi", "Number of Events")
 subleadJetMassHist = root.TH1F("subleadJetMassHist","Subleading AK8 Jet 4 Vector Mass",30,0,300)
 settings.setHistTitles(subleadJetMassHist, "Mass [GeV/c^{2}]", "Number of Events")
 
+# Gen Particle Histograms
+genWPtHist = root.TH1F("genWPtHist","p_{T} of the Generator W Bosons",30, 0, 2000)
+settings.setHistTitles(genWPtHist, "p_{T} [GeV/c]", "Number of Events")
+
+genWMassHist = root.TH1F("genWMassHist","Mass of the Generator W Bosons",30, 0, 100)
+settings.setHistTitles(genWMassHist, "Mass [GeV/c^{2}]", "Number of Events")
+
+virWMassHist = root.TH1F("virWMassHist","Mass of the Weird W Boson",30,0,100)
+settings.setHistTitles(virWMassHist, "Mass [GeV]", "Number of Events")
+
 # Matching Histograms
 matchedLeadHiggsDeltaRHist = root.TH1F("matchedLeadHiggsDeltaRHist","#Delta R Between a Matched Leading Jet and the Higgs",20,0,0.1)
 settings.setHistTitles(matchedLeadHiggsDeltaRHist, "#Delta R", "Number of Events")
@@ -127,6 +162,9 @@ settings.setHistTitles(diHiggsDeltaRHist, "#Delta R", "Number of Events")
 
 nHiggsHist = root.TH1F("nHiggsHist","Number of Generator Higgs",5, -0.5, 4.5)
 settings.setHistTitles(nHiggsHist, "Number of Generator Higgs", "Number of Events")
+
+nWsHist = root.TH1F("nWsHist","Number of Generator W Bosons",7, -0.5, 6.5)
+settings.setHistTitles(nWsHist, "Number of Generator W Bosons", "Number of Events")
 
 nJetsHist = root.TH1F("nJetsHist","Number of AK8 Jets",8,-0.5,7.5)
 settings.setHistTitles(nJetsHist, "Number of AK8 Jets", "Number of Events")
@@ -159,9 +197,30 @@ for event in range(len(leadJetSDmass) ):
       subleadJetMassHist.Fill(subleadJetMass[event])
 
       nHiggsHist.Fill(nGenHiggs[event]) 
+      nWsHist.Fill(nGenWs[event]) 
       nJetsHist.Fill(nJets[event])
       nJetsAK4Hist.Fill(nJetsAK4[event])
       nVerticesHist.Fill(nVertices[event])
+
+      # Gen W bosons
+      genWPtHist.Fill(genW1pt[event])
+      genWPtHist.Fill(genW2pt[event])
+      genWPtHist.Fill(genW3pt[event])
+      genWPtHist.Fill(genW4pt[event])
+
+      if genW1mass[event] != 0:
+          genWMassHist.Fill(genW1mass[event])
+      if genW2mass[event] != 0:
+          genWMassHist.Fill(genW2mass[event])
+      if genW3mass[event] != 0:
+          genWMassHist.Fill(genW3mass[event])
+      if genW4mass[event] != 0:
+          genWMassHist.Fill(genW4mass[event])
+
+      if virW1mass[event] != 0:
+          virWMassHist.Fill(virW1mass[event])
+      if virW2mass[event] != 0:
+          virWMassHist.Fill(virW2mass[event])
 
       # match Higgs to Jets
       leadJetHiggs1DeltaR = deltaR(genHiggs1eta[event], genHiggs1phi[event], leadJetEta[event], leadJetPhi[event] )
@@ -208,9 +267,14 @@ settings.setFillOptions(subleadJetEtaHist, root.kBlue, 1, 2, 1)
 settings.setFillOptions(subleadJetPhiHist, root.kBlue, 1, 2, 1)
 settings.setFillOptions(subleadJetMassHist, root.kBlue, 1, 2, 1)
 
+settings.setFillOptions(genWPtHist, root.kBlue, 1, 2, 1)
+settings.setFillOptions(genWMassHist, root.kBlue, 1, 2, 1)
+settings.setFillOptions(virWMassHist, root.kBlue, 1, 2, 1)
+
 settings.setFillOptions(diHiggsDeltaRHist, root.kBlue, 1, 2, 1)
 
 settings.setFillOptions(nHiggsHist, root.kBlue, 1, 2, 1)
+settings.setFillOptions(nWsHist, root.kBlue, 1, 2, 1)
 settings.setFillOptions(nJetsHist, root.kBlue, 1, 2, 1)
 settings.setFillOptions(nJetsAK4Hist, root.kBlue, 1, 2, 1)
 settings.setFillOptions(nVerticesHist, root.kBlue, 1, 2, 1)
@@ -271,11 +335,25 @@ subleadJetPhiHist.Draw("hist")
 subleadJetMassCanvas = root.TCanvas()
 subleadJetMassHist.Draw("hist")
 
+# Generator Particles
+genWPtCanvas = root.TCanvas()
+genWPtHist.Draw("hist")
+
+genWMassCanvas = root.TCanvas()
+genWMassHist.Draw("hist")
+
+virWMassCanvas = root.TCanvas()
+virWMassHist.Draw("hist")
+
 diHiggsDeltaRCanvas = root.TCanvas()
 diHiggsDeltaRHist.Draw("hist")
 
+# Validation
 nHiggsCanvas = root.TCanvas()
 nHiggsHist.Draw("hist")
+
+nWsCanvas = root.TCanvas()
+nWsHist.Draw("hist")
 
 nJetsCanvas = root.TCanvas()
 nJetsHist.Draw("hist")
@@ -317,9 +395,14 @@ subleadJetEtaCanvas.SaveAs("Hist_SubLeadJetEta.png")
 subleadJetPhiCanvas.SaveAs("Hist_SubLeadJetPhi.png")
 subleadJetMassCanvas.SaveAs("Hist_SubLeadJetMass.png")
 
+genWPtCanvas.SaveAs("Hist_GenWPt.png")
+genWMassCanvas.SaveAs("Hist_GenWMass.png")
+virWMassCanvas.SaveAs("Hist_VirWMass.png")
+
 diHiggsDeltaRCanvas.SaveAs("Hist_diHiggsDeltaR.png")
 
 nHiggsCanvas.SaveAs("Hist_nHiggs.png")
+nWsCanvas.SaveAs("Hist_nWs.png")
 nJetsCanvas.SaveAs("Hist_nJets.png")
 nJetsAK4Canvas.SaveAs("Hist_nJetsAK4.png")
 nVerticesCanvas.SaveAs("Hist_nVertices.png")
