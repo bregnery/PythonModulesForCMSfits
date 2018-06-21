@@ -51,6 +51,8 @@ subleadJetEta = root_numpy.root2array("Radion_HH_wwww_FWLite.root","AnalysisTree
 subleadJetPhi = root_numpy.root2array("Radion_HH_wwww_FWLite.root","AnalysisTree","SubLeadAK8Jet_phi")
 subleadJetMass = root_numpy.root2array("Radion_HH_wwww_FWLite.root","AnalysisTree","SubLeadAK8Jet_mass")
 
+jet3Mass = root_numpy.root2array("Radion_HH_wwww_FWLite.root","AnalysisTree","Jet3AK8_mass")
+
 genHiggs1pt = root_numpy.root2array("Radion_HH_wwww_FWLite.root","AnalysisTree","GenHiggs1_pt")
 genHiggs1phi = root_numpy.root2array("Radion_HH_wwww_FWLite.root","AnalysisTree","GenHiggs1_phi")
 genHiggs1eta = root_numpy.root2array("Radion_HH_wwww_FWLite.root","AnalysisTree","GenHiggs1_eta")
@@ -133,14 +135,17 @@ settings.setHistTitles(subleadJetPhiHist, "#phi", "Number of Events")
 subleadJetMassHist = root.TH1F("subleadJetMassHist","Subleading AK8 Jet 4 Vector Mass",30,0,300)
 settings.setHistTitles(subleadJetMassHist, "Mass [GeV/c^{2}]", "Number of Events")
 
+jet3MassHist = root.TH1F("jet3MassHist","The Mass of the AK8 Jet with the 3^{rd} largest p_{T}",30,0,300)
+settings.setHistTitles(jet3MassHist, "Mass [GeV]", "Number of Events")
+
 # Gen Particle Histograms
 genWPtHist = root.TH1F("genWPtHist","p_{T} of the Generator W Bosons",30, 0, 2000)
 settings.setHistTitles(genWPtHist, "p_{T} [GeV/c]", "Number of Events")
 
-genWMassHist = root.TH1F("genWMassHist","Mass of the Generator W Bosons",30, 0, 100)
+genWMassHist = root.TH1F("genWMassHist","Mass of the On Shell W Bosons",30, 0, 100)
 settings.setHistTitles(genWMassHist, "Mass [GeV/c^{2}]", "Number of Events")
 
-virWMassHist = root.TH1F("virWMassHist","Mass of the Weird W Boson",30,0,100)
+virWMassHist = root.TH1F("virWMassHist","Mass of the Off Shell W Bosons",30,0,100)
 settings.setHistTitles(virWMassHist, "Mass [GeV]", "Number of Events")
 
 # Matching Histograms
@@ -249,6 +254,8 @@ for event in range(len(leadJetSDmass) ):
          else :
             unmatchedSubleadHiggsDeltaRHist.Fill(subleadJetHiggs1DeltaR)
 
+   if nJets[event] > 2:
+      jet3MassHist.Fill(jet3Mass[event])
    
 #   if nJets[event] == 3 :
 #   if nJets[event] == 4 :
@@ -266,6 +273,8 @@ settings.setFillOptions(subleadJetPtHist, root.kBlue, 1, 2, 1)
 settings.setFillOptions(subleadJetEtaHist, root.kBlue, 1, 2, 1)
 settings.setFillOptions(subleadJetPhiHist, root.kBlue, 1, 2, 1)
 settings.setFillOptions(subleadJetMassHist, root.kBlue, 1, 2, 1)
+
+settings.setFillOptions(jet3MassHist, root.kBlue, 1, 2, 1)
 
 settings.setFillOptions(genWPtHist, root.kBlue, 1, 2, 1)
 settings.setFillOptions(genWMassHist, root.kBlue, 1, 2, 1)
@@ -335,6 +344,9 @@ subleadJetPhiHist.Draw("hist")
 subleadJetMassCanvas = root.TCanvas()
 subleadJetMassHist.Draw("hist")
 
+jet3MassCanvas = root.TCanvas()
+jet3MassHist.Draw("hist")
+
 # Generator Particles
 genWPtCanvas = root.TCanvas()
 genWPtHist.Draw("hist")
@@ -394,6 +406,8 @@ subleadJetPtCanvas.SaveAs("Hist_SubLeadJetPt.png")
 subleadJetEtaCanvas.SaveAs("Hist_SubLeadJetEta.png")
 subleadJetPhiCanvas.SaveAs("Hist_SubLeadJetPhi.png")
 subleadJetMassCanvas.SaveAs("Hist_SubLeadJetMass.png")
+
+jet3MassCanvas.SaveAs("Hist_Jet3Mass.png")
 
 genWPtCanvas.SaveAs("Hist_GenWPt.png")
 genWMassCanvas.SaveAs("Hist_GenWMass.png")
