@@ -104,6 +104,39 @@ def makeResidualHist(canvas, hist, xtitle, residualYtitle, stats, drawoption, re
    histopad.Delete()
 
 #==================================================================================
+# Make stacked histograms /////////////////////////////////////////////////////////
+#----------------------------------------------------------------------------------
+# Axis titles are strings /////////////////////////////////////////////////////////
+# HistList is a List of TH1F //////////////////////////////////////////////////////
+# residualColor options are: kColor ///////////////////////////////////////////////
+# stats is for statsbox the options are here: /////////////////////////////////////
+#   https://root.cern.ch/doc/master/classTPaveStats.html //////////////////////////
+# draw options are here: https://root.cern.ch/doc/master/classTHistPainter.html ///
+#----------------------------------------------------------------------------------
+
+def makeStackHist(canvas, histList, title, xtitle, ytitle, drawoption, logY):
+
+   # Make THStack variable
+   stackHist = root.THStack("stackHist",title)
+
+   # Add the histograms to the stack
+   for i, hist in enumerate(histList):
+       stackHist.Add(histList[i])
+
+   # save the plot
+   canvas.cd()
+   stackHist.Draw(drawoption)
+   stackHist.GetXaxis().SetTitle(xtitle)
+   stackHist.GetYaxis().SetTitle(ytitle)
+   canvas.Modified()
+   if logY == 1: canvas.SetLogy() 
+   canvas.SaveAs("StackHist_" + hist.GetName() + ".png")
+   canvas.SaveAs("StackHist_" + hist.GetName() + ".pdf")
+
+   # return the stacked histogram
+   return stackHist
+
+#==================================================================================
 # Set the histogram axis titles ///////////////////////////////////////////////////
 #----------------------------------------------------------------------------------
 # Axis titles are strings /////////////////////////////////////////////////////////
