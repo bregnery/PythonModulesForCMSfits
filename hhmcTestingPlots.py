@@ -173,6 +173,12 @@ settings.setHistTitles(subleadTwoJetPhiHist, "#phi", "Number of Events")
 subleadTwoJetMassHist = root.TH1F("subleadTwoJetMassHist","(nJets = 2) Subleading AK8 Jet 4 Vector Mass",30,0,300)
 settings.setHistTitles(subleadTwoJetMassHist, "Mass [GeV/c^{2}]", "Number of Events")
 
+# When there are Three jets
+subleadThreeJetMassHist = root.TH1F("subleadThreeJetMassHist", "(nJets = 3) Subleading AK8 Jet 4 Vector Mass",30,0,300)
+settings.setHistTitles(subleadThreeJetMassHist, "Mass [GeV]", "Number of Events")
+
+subleadThreeJetSDMassHist = root.TH1F("subleadThreeJetSDMassHist","(nJets = 3) Subleading AK8 Jet SoftDrop Mass",30,0,300)
+settings.setHistTitles(subleadThreeJetSDMassHist, "SD Mass [GeV]", "Number of Events")
 
 # fill the histograms
 for event in range(len(leadJetSDmass) ):
@@ -220,7 +226,10 @@ for event in range(len(leadJetSDmass) ):
       subleadTwoJetPhiHist.Fill(subleadJetPhi[event])
       subleadTwoJetMassHist.Fill(subleadJetMass[event])
 
-#   if nJets[event] == 3 :
+   if nJets[event] == 3 :
+      subleadThreeJetMassHist.Fill(subleadJetMass[event])
+      subleadThreeJetSDMassHist.Fill(subleadJetSDmass[event])
+
 #   if nJets[event] == 4 :
 
 # adjust histogram settings
@@ -265,6 +274,9 @@ settings.setFillOptions(subleadTwoJetEtaHist, root.kBlue, 1, 2, 1)
 settings.setFillOptions(subleadTwoJetPhiHist, root.kBlue, 1, 2, 1)
 settings.setFillOptions(subleadTwoJetMassHist, root.kBlue, 1, 2, 1)
 
+# When there are three jets
+settings.setFillOptions(subleadThreeJetMassHist, root.kBlue, 1, 2, 1)
+settings.setFillOptions(subleadThreeJetSDMassHist, root.kBlue, 1, 2, 1)
 
 #==================================================================================
 # Fit the Histograms //////////////////////////////////////////////////////////////
@@ -382,6 +394,11 @@ subleadTwoJetPhiHist.Draw("hist")
 subleadTwoJetMassCanvas = root.TCanvas()
 subleadTwoJetMassHist.Draw("hist")
 
+subleadThreeJetMassCanvas = root.TCanvas()
+subleadThreeJetMassHist.Draw("hist")
+
+subleadThreeJetSDMassCanvas = root.TCanvas()
+subleadThreeJetSDMassHist.Draw("hist")
 
 # make a TCanvas and a histogram plot with residuals
 #residualCanvas = root.TCanvas("residualCanvas", "residualCanvas")
@@ -430,3 +447,5 @@ subleadTwoJetEtaCanvas.SaveAs("Hist_SubLeadTwoJetEta.png")
 subleadTwoJetPhiCanvas.SaveAs("Hist_SubLeadTwoJetPhi.png")
 subleadTwoJetMassCanvas.SaveAs("Hist_SubLeadTwoJetMass.png")
 
+subleadThreeJetMassCanvas.SaveAs("Hist_SubLeadThreeJetMass.png")
+subleadThreeJetSDMassCanvas.SaveAs("Hist_SubleadThreeJetSDMass.png")

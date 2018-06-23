@@ -190,7 +190,7 @@ def setSimpleStyle():
    root.gStyle.SetPadBorderMode  (0)
    root.gStyle.SetPadBottomMargin(0.13)
    root.gStyle.SetPadTopMargin   (0.08)
-   root.gStyle.SetPadLeftMargin  (0.15)
+   root.gStyle.SetPadLeftMargin  (0.16)
    root.gStyle.SetPadRightMargin (0.05)
    root.gStyle.SetPadGridX       (0)
    root.gStyle.SetPadGridY       (0)
