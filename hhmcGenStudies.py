@@ -198,8 +198,8 @@ settings.setHistTitles(w1HiggsFramePHist, "|P| [GeV]", "Number of Events")
 w2HiggsFramePHist = root.TH1F("w2HiggsFramePHist","Momentum of W2 in the Higgs Rest Frame",30,0,100)
 settings.setHistTitles(w2HiggsFramePHist, "|P| [GeV]", "Number of Events")
 
-unmatchedWpairsHist = root.TH1F("unmatchedWpairsHist", "Number of Leading and Subleading Jets with no W pair match", 2,0.5,2.5)
-settings.setHistTitles(unmatchedWpairsHist,"1 for leading Jet, 2 for subleading jet","Number of Unmatched Jets")
+matchedWpairsHist = root.TH1F("matchedWpairsHist", "Number of Leading and Subleading Jets with a W pair match", 2,0.5,2.5)
+settings.setHistTitles(matchedWpairsHist,"1 for leading Jet, 2 for subleading jet","Number of Matched Jets")
 
 # 2D Histograms
 w1w2massHist = root.TH2F("w1w2massHist","Mass of Daughter W Bosons",15,40,120,15,0,80)
@@ -323,7 +323,7 @@ for event in range(len(leadJetSDmass) ):
          vW2jet1DeltaR = deltaR(virW2eta[event], virW2phi[event], leadJetEta[event], leadJetPhi[event])
          vW2jet2DeltaR = deltaR(virW2eta[event], virW2phi[event], subleadJetEta[event], subleadJetPhi[event])
          if vW2jet1DeltaR < 1.0: 
-            subleadJetVirWMatch[1] = True
+            leadJetVirWMatch[1] = True
          if vW2jet2DeltaR < 1.0:
             subleadJetVirWMatch[1] = True
 
@@ -352,7 +352,7 @@ for event in range(len(leadJetSDmass) ):
                      w1w2massHist.Fill(wMassList[i], wMassList[j])
                   if wMassList[i] < wMassList[j]:
                      w1w2massHist.Fill(wMassList[j], wMassList[i])
-                  twoWmatches == True
+                  twoWmatches = True
                   # Boost into H frame
                   for l in range(len(leadJetHMatch) ):
                      if leadJetHMatch[l] == True:
@@ -368,7 +368,7 @@ for event in range(len(leadJetSDmass) ):
                for k in range(len(leadJetVirWMatch) ):
                   if leadJetVirWMatch[k] == True:
                     w1w2massHist.Fill(wMassList[i], virWmassList[k])
-                    twoWmatches == True
+                    twoWmatches = True
                     # Boost into H frame
                     for l in range(len(leadJetHMatch) ):
                        if leadJetHMatch[l] == True:
@@ -376,8 +376,9 @@ for event in range(len(leadJetSDmass) ):
                           virW[k].Boost( -Higgs[l].BoostVector() )
                           w1HiggsFramePHist.Fill(genW[i].P() )
                           w2HiggsFramePHist.Fill(virW[k].P() )
-         if twoWmatches == True: break
-      if twoWmatches == False: unmatchedWpairsHist.Fill(1)
+         if twoWmatches == True: 
+            matchedWpairsHist.Fill(1)
+            break
                           
       for i in range(len(subleadJetWMatch) ):
          twoWmatches = False
@@ -388,7 +389,7 @@ for event in range(len(leadJetSDmass) ):
                      w1w2massHist.Fill(wMassList[i], wMassList[j])
                   if wMassList[j] > wMassList[i]:
                      w1w2massHist.Fill(wMassList[j], wMassList[i])
-                  twoWmatches == True
+                  twoWmatches = True
                   # Boost into H frame
                   for l in range(len(subleadJetHMatch) ):
                      if subleadJetHMatch[l] == True:
@@ -404,7 +405,7 @@ for event in range(len(leadJetSDmass) ):
                for k in range(len(subleadJetVirWMatch) ):
                   if subleadJetVirWMatch[k] == True:
                     w1w2massHist.Fill(wMassList[i], virWmassList[k])
-                    twoWmatches == True
+                    twoWmatches = True
                     # Boost into H frame
                     for l in range(len(subleadJetHMatch) ):
                        if subleadJetHMatch[l] == True:
@@ -412,8 +413,9 @@ for event in range(len(leadJetSDmass) ):
                           virW[k].Boost( -Higgs[l].BoostVector() )
                           w1HiggsFramePHist.Fill(genW[i].P() )
                           w2HiggsFramePHist.Fill(virW[k].P() )
-         if twoWmatches == True: break
-      if twoWmatches == False: unmatchedWpairsHist.Fill(2)
+         if twoWmatches == True: 
+            matchedWpairsHist.Fill(2)
+            break
          
 
 
@@ -444,7 +446,7 @@ settings.setFillOptions(nJetsAK4Hist, root.kBlue, 1, 2, 1)
 
 settings.setFillOptions(w1HiggsFramePHist, root.kBlue, 1, 2, 1)
 settings.setFillOptions(w2HiggsFramePHist, root.kBlue, 1, 2, 1)
-settings.setFillOptions(unmatchedWpairsHist, root.kBlue, 1, 2, 1)
+settings.setFillOptions(matchedWpairsHist, root.kBlue, 1, 2, 1)
 
 settings.setFillOptions(matchedLeadHiggsDeltaRHist, root.kBlue, 1, 2, 1)
 settings.setFillOptions(unmatchedLeadHiggsDeltaRHist, root.kBlue, 1, 2, 1)
@@ -526,8 +528,8 @@ w1HiggsFramePHist.Draw("hist")
 w2HiggsFramePCanvas = root.TCanvas()
 w2HiggsFramePHist.Draw("hist")
 
-unmatchedWpairsCanvas = root.TCanvas()
-unmatchedWpairsHist.Draw("hist")
+matchedWpairsCanvas = root.TCanvas()
+matchedWpairsHist.Draw("hist")
 
 # 2D Histograms
 root.gStyle.SetPadRightMargin(0.2)
@@ -560,6 +562,6 @@ unmatchedSubleadHiggsDeltaRCanvas.SaveAs("Hist_UnmatchedSubLeadHiggsDeltaR.png")
 
 w1HiggsFramePCanvas.SaveAs("Hist_W1HiggsFrameP.png")
 w2HiggsFramePCanvas.SaveAs("Hist_W2HiggsFrameP.png")
-unmatchedWpairsCanvas.SaveAs("Hist_UnmatchedWPairs.png")
+matchedWpairsCanvas.SaveAs("Hist_MatchedWPairs.png")
 
 w1w2massCanvas.SaveAs("Hist_W1W2mass.png")
