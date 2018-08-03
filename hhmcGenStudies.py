@@ -52,6 +52,12 @@ subleadJetPhi = root_numpy.root2array("Radion_HH_wwww_FWLite.root","AnalysisTree
 subleadJetMass = root_numpy.root2array("Radion_HH_wwww_FWLite.root","AnalysisTree","SubLeadAK8Jet_mass")
 
 jet3Mass = root_numpy.root2array("Radion_HH_wwww_FWLite.root","AnalysisTree","Jet3AK8_mass")
+jet3Pt = root_numpy.root2array("Radion_HH_wwww_FWLite.root","AnalysisTree","Jet3AK8_pt")
+jet3Phi = root_numpy.root2array("Radion_HH_wwww_FWLite.root","AnalysisTree","Jet3AK8_phi")
+jet3Eta = root_numpy.root2array("Radion_HH_wwww_FWLite.root","AnalysisTree","Jet3AK8_eta")
+
+jet4Mass = root_numpy.root2array("Radion_HH_wwww_FWLite.root","AnalysisTree","Jet4AK8_mass")
+jet4Pt = root_numpy.root2array("Radion_HH_wwww_FWLite.root","AnalysisTree","Jet4AK8_pt")
 
 genHiggs1pt = root_numpy.root2array("Radion_HH_wwww_FWLite.root","AnalysisTree","GenHiggs1_pt")
 genHiggs1px = root_numpy.root2array("Radion_HH_wwww_FWLite.root","AnalysisTree","GenHiggs1_px")
