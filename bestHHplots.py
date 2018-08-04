@@ -15,6 +15,7 @@ import root_numpy
 import style.histogramsettings as settings
 import fitting.rootpdfs as pdf
 import fitting.fitwithroot as fit
+import tools.usefulFunctions as tools
 
 # enter batch mode in root (so python can access displays)
 root.gROOT.SetBatch(True)
@@ -47,6 +48,21 @@ jet3dnnQcd = root_numpy.root2array("best_HH_results.root","run/bestTree","jet3_d
 
 nJets = root_numpy.root2array("best_HH_results.root","run/bestTree","nJets")
 
+jet1phi = root_numpy.root2array("best_HH_results.root","run/bestTree","jet1AK8_phi")
+jet1eta = root_numpy.root2array("best_HH_results.root","run/bestTree","jet1AK8_eta")
+
+jet2phi = root_numpy.root2array("best_HH_results.root","run/bestTree","jet2AK8_phi")
+jet2eta = root_numpy.root2array("best_HH_results.root","run/bestTree","jet2AK8_eta")
+
+jet3phi = root_numpy.root2array("best_HH_results.root","run/bestTree","jet3AK8_phi")
+jet3eta = root_numpy.root2array("best_HH_results.root","run/bestTree","jet3AK8_eta")
+
+genHiggs1phi = root_numpy.root2array("best_HH_results.root","run/bestTree","genHiggs1_phi")
+genHiggs1eta = root_numpy.root2array("best_HH_results.root","run/bestTree","genHiggs1_eta")
+
+genHiggs2phi = root_numpy.root2array("best_HH_results.root","run/bestTree","genHiggs2_phi")
+genHiggs2eta = root_numpy.root2array("best_HH_results.root","run/bestTree","genHiggs2_eta")
+
 #==================================================================================
 # Make Histograms /////////////////////////////////////////////////////////////////
 #==================================================================================
@@ -73,6 +89,21 @@ settings.setHistTitles(probThist, "Probability", "Number of Jets")
 probQhist = root.TH1F("probQhist","BEST QCD Probability",30,0,1)
 settings.setHistTitles(probQhist, "Probability", "Number of Jets")
 
+probMatchHhist = root.TH1F("probMatchHhist","BEST Higgs Probability for Jets Matching a gen Higgs",30,0,1)
+settings.setHistTitles(probMatchHhist, "Probability", "Number of Jets")
+
+probMatchWhist = root.TH1F("probMatchWhist","BEST W Probability for Jets Matching a gen Higgs",30,0,1)
+settings.setHistTitles(probMatchWhist, "Probability", "Number of Jets")
+
+probMatchZhist = root.TH1F("probMatchZhist","BEST Z Probability for Jets Matching a gen Higgs",30,0,1)
+settings.setHistTitles(probMatchZhist, "Probability", "Number of Jets")
+
+probMatchThist = root.TH1F("probMatchThist","BEST Top Probability for Jets Matching a gen Higgs",30,0,1)
+settings.setHistTitles(probMatchThist, "Probability", "Number of Jets")
+
+probMatchQhist = root.TH1F("probMatchQhist","BEST QCD Probability for Jets Matching a gen Higgs",30,0,1)
+settings.setHistTitles(probMatchQhist, "Probability", "Number of Jets")
+
 jet1SumHist = root.TH1F("jet1SumHist","Sum of BEST Probabilities for Jet 1", 30, 0, 1)
 settings.setHistTitles(jet1SumHist, "Sum of Probabilities", "Number of Events")
 
@@ -84,6 +115,27 @@ settings.setHistTitles(jet3SumHist, "Sum of Probabilities", "Number of Events")
 
 # fill the histograms
 for event in range(len(jet1dnnH) ):
+   jetEtaPhi = [ [jet1eta[event], jet1phi[event] ], 
+                 [jet2eta[event], jet2phi[event] ], 
+                 [jet3eta[event], jet3phi[event] ] ]
+
+   jetProb = [ [jet1dnnH[event], jet1dnnW[event], jet1dnnZ[event], jet1dnnTop[event], jet1dnnQcd[event] ], 
+               [jet2dnnH[event], jet2dnnW[event], jet2dnnZ[event], jet2dnnTop[event], jet2dnnQcd[event] ], 
+               [jet3dnnH[event], jet3dnnW[event], jet3dnnZ[event], jet3dnnTop[event], jet3dnnQcd[event] ] ] 
+
+   higgsEtaPhi = [ [genHiggs1eta[event], genHiggs1phi[event] ],
+                   [genHiggs2eta[event], genHiggs2phi[event] ] ]
+
+   matchJetHiggs = tools.deltaRMatch(jetEtaPhi, higgsEtaPhi, 0.1)
+
+   for ijet in range(len(matchJetHiggs) ):
+      if(matchJetHiggs[ijet][0] == True or matchJetHiggs[ijet][1] == True):
+         probMatchHhist.Fill(jetProb[ijet][0]) 
+         probMatchWhist.Fill(jetProb[ijet][1]) 
+         probMatchZhist.Fill(jetProb[ijet][2]) 
+         probMatchThist.Fill(jetProb[ijet][3]) 
+         probMatchQhist.Fill(jetProb[ijet][4]) 
+
    if nJets[event] > 0:
       probHhist.Fill(jet1dnnH[event])
       probWhist.Fill(jet1dnnW[event])
@@ -117,6 +169,11 @@ settings.setFillOptions(probWhist, root.kBlue, 1, 2, 1)
 settings.setFillOptions(probZhist, root.kBlue, 1, 2, 1)
 settings.setFillOptions(probThist, root.kBlue, 1, 2, 1)
 settings.setFillOptions(probQhist, root.kBlue, 1, 2, 1)
+settings.setFillOptions(probMatchHhist, root.kBlue, 1, 2, 1)
+settings.setFillOptions(probMatchWhist, root.kBlue, 1, 2, 1)
+settings.setFillOptions(probMatchZhist, root.kBlue, 1, 2, 1)
+settings.setFillOptions(probMatchThist, root.kBlue, 1, 2, 1)
+settings.setFillOptions(probMatchQhist, root.kBlue, 1, 2, 1)
 settings.setFillOptions(jet1SumHist, root.kBlue, 1, 2, 1)
 settings.setFillOptions(jet2SumHist, root.kBlue, 1, 2, 1)
 settings.setFillOptions(jet3SumHist, root.kBlue, 1, 2, 1)
@@ -141,6 +198,21 @@ probThist.Draw("hist")
 probQcanvas = root.TCanvas()
 probQhist.Draw("hist")
 
+probMatchHcanvas = root.TCanvas()
+probMatchHhist.Draw("hist")
+
+probMatchWcanvas = root.TCanvas()
+probMatchWhist.Draw("hist")
+
+probMatchZcanvas = root.TCanvas()
+probMatchZhist.Draw("hist")
+
+probMatchTcanvas = root.TCanvas()
+probMatchThist.Draw("hist")
+
+probMatchQcanvas = root.TCanvas()
+probMatchQhist.Draw("hist")
+
 jet1SumCanvas = root.TCanvas()
 jet1SumHist.Draw("hist")
 
@@ -156,6 +228,11 @@ probWcanvas.SaveAs("Hist_probW.png")
 probZcanvas.SaveAs("Hist_probZ.png")
 probTcanvas.SaveAs("Hist_probTop.png")
 probQcanvas.SaveAs("Hist_probQCD.png")
+probMatchHcanvas.SaveAs("Hist_probMatchH.png")
+probMatchWcanvas.SaveAs("Hist_probMatchW.png")
+probMatchZcanvas.SaveAs("Hist_probMatchZ.png")
+probMatchTcanvas.SaveAs("Hist_probMatchTop.png")
+probMatchQcanvas.SaveAs("Hist_probMatchQCD.png")
 jet1SumCanvas.SaveAs("Hist_probSumJet1.png")
 jet2SumCanvas.SaveAs("Hist_probSumJet2.png")
 jet3SumCanvas.SaveAs("Hist_probSumJet3.png")
