@@ -74,35 +74,35 @@ settings.setSimpleStyle()
 root.gStyle.SetOptStat(0)
 
 # make root histogram variables
-probHhist = root.TH1F("probHhist","BEST Higgs Probability",30,0,1)
-settings.setHistTitles(probHhist, "Probability", "Number of Jets")
+probHHist = root.TH1F("probHHist","BEST Higgs Probability",30,0,1)
+settings.setHistTitles(probHHist, "Probability", "Number of Jets")
 
-probWhist = root.TH1F("probWhist","BEST W Probability",30,0,1)
-settings.setHistTitles(probWhist, "Probability", "Number of Jets")
+probWHist = root.TH1F("probWHist","BEST W Probability",30,0,1)
+settings.setHistTitles(probWHist, "Probability", "Number of Jets")
 
-probZhist = root.TH1F("probZhist","BEST Z Probability",30,0,1)
-settings.setHistTitles(probZhist, "Probability", "Number of Jets")
+probZHist = root.TH1F("probZHist","BEST Z Probability",30,0,1)
+settings.setHistTitles(probZHist, "Probability", "Number of Jets")
 
-probThist = root.TH1F("probThist","BEST Top Probability",30,0,1)
-settings.setHistTitles(probThist, "Probability", "Number of Jets")
+probTHist = root.TH1F("probTHist","BEST Top Probability",30,0,1)
+settings.setHistTitles(probTHist, "Probability", "Number of Jets")
 
-probQhist = root.TH1F("probQhist","BEST QCD Probability",30,0,1)
-settings.setHistTitles(probQhist, "Probability", "Number of Jets")
+probQHist = root.TH1F("probQHist","BEST QCD Probability",30,0,1)
+settings.setHistTitles(probQHist, "Probability", "Number of Jets")
 
-probMatchHhist = root.TH1F("probMatchHhist","BEST Higgs Probability for Jets Matching a gen Higgs",30,0,1)
-settings.setHistTitles(probMatchHhist, "Probability", "Number of Jets")
+probMatchHHist = root.TH1F("probMatchHHist","BEST Higgs Probability for Jets Matching a gen Higgs",30,0,1)
+settings.setHistTitles(probMatchHHist, "Probability", "Number of Jets")
 
-probMatchWhist = root.TH1F("probMatchWhist","BEST W Probability for Jets Matching a gen Higgs",30,0,1)
-settings.setHistTitles(probMatchWhist, "Probability", "Number of Jets")
+probMatchWHist = root.TH1F("probMatchWHist","BEST W Probability for Jets Matching a gen Higgs",30,0,1)
+settings.setHistTitles(probMatchWHist, "Probability", "Number of Jets")
 
-probMatchZhist = root.TH1F("probMatchZhist","BEST Z Probability for Jets Matching a gen Higgs",30,0,1)
-settings.setHistTitles(probMatchZhist, "Probability", "Number of Jets")
+probMatchZHist = root.TH1F("probMatchZHist","BEST Z Probability for Jets Matching a gen Higgs",30,0,1)
+settings.setHistTitles(probMatchZHist, "Probability", "Number of Jets")
 
-probMatchThist = root.TH1F("probMatchThist","BEST Top Probability for Jets Matching a gen Higgs",30,0,1)
-settings.setHistTitles(probMatchThist, "Probability", "Number of Jets")
+probMatchTHist = root.TH1F("probMatchTHist","BEST Top Probability for Jets Matching a gen Higgs",30,0,1)
+settings.setHistTitles(probMatchTHist, "Probability", "Number of Jets")
 
-probMatchQhist = root.TH1F("probMatchQhist","BEST QCD Probability for Jets Matching a gen Higgs",30,0,1)
-settings.setHistTitles(probMatchQhist, "Probability", "Number of Jets")
+probMatchQHist = root.TH1F("probMatchQHist","BEST QCD Probability for Jets Matching a gen Higgs",30,0,1)
+settings.setHistTitles(probMatchQHist, "Probability", "Number of Jets")
 
 jet1SumHist = root.TH1F("jet1SumHist","Sum of BEST Probabilities for Jet 1", 30, 0, 1)
 settings.setHistTitles(jet1SumHist, "Sum of Probabilities", "Number of Events")
@@ -113,126 +113,122 @@ settings.setHistTitles(jet2SumHist, "Sum of Probabilities", "Number of Events")
 jet3SumHist = root.TH1F("jet3SumHist","Sum of BEST Probabilities for Jet 3", 30, 0, 1)
 settings.setHistTitles(jet3SumHist, "Sum of Probabilities", "Number of Events")
 
+hMatchHist = root.TH1F("hMatchHist","Number of Matched and Unmatched Higgs", 2, 0, 2)
+settings.setHistTitles(hMatchHist, "Matched (0.5) or Unmatched (1.5) Higgs", "Number of Events")
+
+unmatchedHEtaHist = root.TH1F("unmatchedHEtaHist","#eta of Generator Higgs with no matching Jet", 30, 0, 4)
+settings.setHistTitles(unmatchedHEtaHist, "#eta", "Number of Events")
+
 # fill the histograms
 for event in range(len(jet1dnnH) ):
+
+   # Eta and Phi values of the AK8 jets
    jetEtaPhi = [ [jet1eta[event], jet1phi[event] ], 
                  [jet2eta[event], jet2phi[event] ], 
                  [jet3eta[event], jet3phi[event] ] ]
 
+   # vector of BEST probabilities for 3 highest pT jets
    jetProb = [ [jet1dnnH[event], jet1dnnW[event], jet1dnnZ[event], jet1dnnTop[event], jet1dnnQcd[event] ], 
                [jet2dnnH[event], jet2dnnW[event], jet2dnnZ[event], jet2dnnTop[event], jet2dnnQcd[event] ], 
                [jet3dnnH[event], jet3dnnW[event], jet3dnnZ[event], jet3dnnTop[event], jet3dnnQcd[event] ] ] 
 
+   # Eta and Phi values of the generator Higgs
    higgsEtaPhi = [ [genHiggs1eta[event], genHiggs1phi[event] ],
                    [genHiggs2eta[event], genHiggs2phi[event] ] ]
 
+   # delta R match AK8 jets to Higgs
    matchJetHiggs = tools.deltaRMatch(jetEtaPhi, higgsEtaPhi, 0.1)
 
+   # 1.5 = False, 0.5 = True
+   higgs1match = 1.5
+   higgs2match = 1.5
+
+   # look at jets with matching generator Higgs
    for ijet in range(len(matchJetHiggs) ):
       if(matchJetHiggs[ijet][0] == True or matchJetHiggs[ijet][1] == True):
-         probMatchHhist.Fill(jetProb[ijet][0]) 
-         probMatchWhist.Fill(jetProb[ijet][1]) 
-         probMatchZhist.Fill(jetProb[ijet][2]) 
-         probMatchThist.Fill(jetProb[ijet][3]) 
-         probMatchQhist.Fill(jetProb[ijet][4]) 
+         probMatchHHist.Fill(jetProb[ijet][0]) 
+         probMatchWHist.Fill(jetProb[ijet][1]) 
+         probMatchZHist.Fill(jetProb[ijet][2]) 
+         probMatchTHist.Fill(jetProb[ijet][3]) 
+         probMatchQHist.Fill(jetProb[ijet][4]) 
+
+      if(matchJetHiggs[ijet][0] == True): higgs1match = 0.5
+      if(matchJetHiggs[ijet][1] == True): higgs2match = 0.5
+
+   hMatchHist.Fill(higgs1match)
+   hMatchHist.Fill(higgs2match)
+
+   if(higgs1match == 1.5): unmatchedHEtaHist.Fill(higgsEtaPhi[0][0])
+   if(higgs2match == 1.5): unmatchedHEtaHist.Fill(higgsEtaPhi[1][0])
 
    if nJets[event] > 0:
-      probHhist.Fill(jet1dnnH[event])
-      probWhist.Fill(jet1dnnW[event])
-      probZhist.Fill(jet1dnnZ[event])
-      probThist.Fill(jet1dnnTop[event])
-      probQhist.Fill(jet1dnnQcd[event])
+      probHHist.Fill(jet1dnnH[event])
+      probWHist.Fill(jet1dnnW[event])
+      probZHist.Fill(jet1dnnZ[event])
+      probTHist.Fill(jet1dnnTop[event])
+      probQHist.Fill(jet1dnnQcd[event])
       jet1Sum = jet1dnnH[event] + jet1dnnW[event] + jet1dnnZ[event] + jet1dnnTop[event] + jet1dnnQcd[event]
       jet1SumHist.Fill(jet1Sum)
      
    if nJets[event] > 1: 
-      probHhist.Fill(jet2dnnH[event])
-      probWhist.Fill(jet2dnnW[event])
-      probZhist.Fill(jet2dnnZ[event])
-      probThist.Fill(jet2dnnTop[event])
-      probQhist.Fill(jet2dnnQcd[event])
+      probHHist.Fill(jet2dnnH[event])
+      probWHist.Fill(jet2dnnW[event])
+      probZHist.Fill(jet2dnnZ[event])
+      probTHist.Fill(jet2dnnTop[event])
+      probQHist.Fill(jet2dnnQcd[event])
       jet2Sum = jet2dnnH[event] + jet2dnnW[event] + jet2dnnZ[event] + jet2dnnTop[event] + jet2dnnQcd[event]
       jet2SumHist.Fill(jet2Sum)
      
    if nJets[event] > 2: 
-      probHhist.Fill(jet3dnnH[event])
-      probZhist.Fill(jet3dnnZ[event])
-      probWhist.Fill(jet3dnnW[event])
-      probThist.Fill(jet3dnnTop[event])
-      probQhist.Fill(jet3dnnQcd[event])
+      probHHist.Fill(jet3dnnH[event])
+      probZHist.Fill(jet3dnnZ[event])
+      probWHist.Fill(jet3dnnW[event])
+      probTHist.Fill(jet3dnnTop[event])
+      probQHist.Fill(jet3dnnQcd[event])
       jet3Sum = jet3dnnH[event] + jet3dnnW[event] + jet3dnnZ[event] + jet3dnnTop[event] + jet3dnnQcd[event]
       jet3SumHist.Fill(jet3Sum)
 
 # adjust histogram settings
-settings.setFillOptions(probHhist, root.kBlue, 1, 2, 1)
-settings.setFillOptions(probWhist, root.kBlue, 1, 2, 1)
-settings.setFillOptions(probZhist, root.kBlue, 1, 2, 1)
-settings.setFillOptions(probThist, root.kBlue, 1, 2, 1)
-settings.setFillOptions(probQhist, root.kBlue, 1, 2, 1)
-settings.setFillOptions(probMatchHhist, root.kBlue, 1, 2, 1)
-settings.setFillOptions(probMatchWhist, root.kBlue, 1, 2, 1)
-settings.setFillOptions(probMatchZhist, root.kBlue, 1, 2, 1)
-settings.setFillOptions(probMatchThist, root.kBlue, 1, 2, 1)
-settings.setFillOptions(probMatchQhist, root.kBlue, 1, 2, 1)
+settings.setFillOptions(probHHist, root.kBlue, 1, 2, 1)
+settings.setFillOptions(probWHist, root.kBlue, 1, 2, 1)
+settings.setFillOptions(probZHist, root.kBlue, 1, 2, 1)
+settings.setFillOptions(probTHist, root.kBlue, 1, 2, 1)
+settings.setFillOptions(probQHist, root.kBlue, 1, 2, 1)
+settings.setFillOptions(probMatchHHist, root.kBlue, 1, 2, 1)
+settings.setFillOptions(probMatchWHist, root.kBlue, 1, 2, 1)
+settings.setFillOptions(probMatchZHist, root.kBlue, 1, 2, 1)
+settings.setFillOptions(probMatchTHist, root.kBlue, 1, 2, 1)
+settings.setFillOptions(probMatchQHist, root.kBlue, 1, 2, 1)
 settings.setFillOptions(jet1SumHist, root.kBlue, 1, 2, 1)
 settings.setFillOptions(jet2SumHist, root.kBlue, 1, 2, 1)
 settings.setFillOptions(jet3SumHist, root.kBlue, 1, 2, 1)
+settings.setFillOptions(hMatchHist, root.kBlue, 1, 2, 1)
+settings.setFillOptions(unmatchedHEtaHist, root.kBlue, 1, 2, 1)
 
 #==================================================================================
 # Draw Plots //////////////////////////////////////////////////////////////////////
 #==================================================================================
 
-# make a TCanvas and draw the histograms
-probHcanvas = root.TCanvas()
-probHhist.Draw("hist")
+# put the histograms into a vector
+histVec = []
+histVec.append([probHHist, "hist"])
+histVec.append([probWHist, "hist"])
+histVec.append([probZHist, "hist"])
+histVec.append([probTHist, "hist"])
+histVec.append([probQHist, "hist"])
 
-probWcanvas = root.TCanvas()
-probWhist.Draw("hist")
+histVec.append([probMatchHHist, "hist"])
+histVec.append([probMatchWHist, "hist"])
+histVec.append([probMatchZHist, "hist"])
+histVec.append([probMatchTHist, "hist"])
+histVec.append([probMatchQHist, "hist"])
 
-probZcanvas = root.TCanvas()
-probZhist.Draw("hist")
+histVec.append([jet1SumHist, "hist"])
+histVec.append([jet2SumHist, "hist"])
+histVec.append([jet3SumHist, "hist"])
 
-probTcanvas = root.TCanvas()
-probThist.Draw("hist")
+histVec.append([hMatchHist, "hist"])
+histVec.append([unmatchedHEtaHist, "hist"])
 
-probQcanvas = root.TCanvas()
-probQhist.Draw("hist")
-
-probMatchHcanvas = root.TCanvas()
-probMatchHhist.Draw("hist")
-
-probMatchWcanvas = root.TCanvas()
-probMatchWhist.Draw("hist")
-
-probMatchZcanvas = root.TCanvas()
-probMatchZhist.Draw("hist")
-
-probMatchTcanvas = root.TCanvas()
-probMatchThist.Draw("hist")
-
-probMatchQcanvas = root.TCanvas()
-probMatchQhist.Draw("hist")
-
-jet1SumCanvas = root.TCanvas()
-jet1SumHist.Draw("hist")
-
-jet2SumCanvas = root.TCanvas()
-jet2SumHist.Draw("hist")
-
-jet3SumCanvas = root.TCanvas()
-jet3SumHist.Draw("hist")
-
-# Save the Plots
-probHcanvas.SaveAs("Hist_probH.png")
-probWcanvas.SaveAs("Hist_probW.png")
-probZcanvas.SaveAs("Hist_probZ.png")
-probTcanvas.SaveAs("Hist_probTop.png")
-probQcanvas.SaveAs("Hist_probQCD.png")
-probMatchHcanvas.SaveAs("Hist_probMatchH.png")
-probMatchWcanvas.SaveAs("Hist_probMatchW.png")
-probMatchZcanvas.SaveAs("Hist_probMatchZ.png")
-probMatchTcanvas.SaveAs("Hist_probMatchTop.png")
-probMatchQcanvas.SaveAs("Hist_probMatchQCD.png")
-jet1SumCanvas.SaveAs("Hist_probSumJet1.png")
-jet2SumCanvas.SaveAs("Hist_probSumJet2.png")
-jet3SumCanvas.SaveAs("Hist_probSumJet3.png")
+# draw and save the histograms
+settings.drawHist(histVec, True, False)

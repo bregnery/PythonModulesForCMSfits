@@ -104,6 +104,39 @@ def makeResidualHist(canvas, hist, xtitle, residualYtitle, stats, drawoption, re
    histopad.Delete()
 
 #==================================================================================
+# Draw the histogram on a canvas and save output //////////////////////////////////
+#----------------------------------------------------------------------------------
+# histVec is a 2D aray of histograms and draw options /////////////////////////////
+#    ( [ [TH_1, drawOption1], [TH_2, drawOption2], ... ] ) ////////////////////////
+# savePNG and savePDF are boolean variables ///////////////////////////////////////
+#----------------------------------------------------------------------------------
+
+def drawHist(histVec, savePNG, savePDF):
+
+   # make canas
+   canvas = root.TCanvas()
+
+   for ihist in range(len(histVec) ):
+
+      # draw histogram
+      histVec[ihist][0].Draw(histVec[ihist][1])
+
+      # remove hist part of histogram name
+      name = histVec[ihist][0].GetName()
+      if name.endswith("Hist") or name.endswith("hist"):
+         name = name[:-4]
+
+      # save histogram
+      if savePNG == True :
+         canvas.SaveAs("Hist_" + name + ".png")
+      if savePDF == True :
+         canvas.SaveAs("Hist_" + name + ".pdf")
+
+      # clear the canvas
+      canvas.Clear()
+   
+
+#==================================================================================
 # Make stacked histograms /////////////////////////////////////////////////////////
 #----------------------------------------------------------------------------------
 # Axis titles are strings /////////////////////////////////////////////////////////
