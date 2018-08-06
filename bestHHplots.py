@@ -161,6 +161,7 @@ for event in range(len(jet1dnnH) ):
    if(higgs1match == 1.5): unmatchedHEtaHist.Fill(higgsEtaPhi[0][0])
    if(higgs2match == 1.5): unmatchedHEtaHist.Fill(higgsEtaPhi[1][0])
 
+   # get BEST probabilities for various numbers of jets
    if nJets[event] > 0:
       probHHist.Fill(jet1dnnH[event])
       probWHist.Fill(jet1dnnW[event])
@@ -188,23 +189,6 @@ for event in range(len(jet1dnnH) ):
       jet3Sum = jet3dnnH[event] + jet3dnnW[event] + jet3dnnZ[event] + jet3dnnTop[event] + jet3dnnQcd[event]
       jet3SumHist.Fill(jet3Sum)
 
-# adjust histogram settings
-settings.setFillOptions(probHHist, root.kBlue, 1, 2, 1)
-settings.setFillOptions(probWHist, root.kBlue, 1, 2, 1)
-settings.setFillOptions(probZHist, root.kBlue, 1, 2, 1)
-settings.setFillOptions(probTHist, root.kBlue, 1, 2, 1)
-settings.setFillOptions(probQHist, root.kBlue, 1, 2, 1)
-settings.setFillOptions(probMatchHHist, root.kBlue, 1, 2, 1)
-settings.setFillOptions(probMatchWHist, root.kBlue, 1, 2, 1)
-settings.setFillOptions(probMatchZHist, root.kBlue, 1, 2, 1)
-settings.setFillOptions(probMatchTHist, root.kBlue, 1, 2, 1)
-settings.setFillOptions(probMatchQHist, root.kBlue, 1, 2, 1)
-settings.setFillOptions(jet1SumHist, root.kBlue, 1, 2, 1)
-settings.setFillOptions(jet2SumHist, root.kBlue, 1, 2, 1)
-settings.setFillOptions(jet3SumHist, root.kBlue, 1, 2, 1)
-settings.setFillOptions(hMatchHist, root.kBlue, 1, 2, 1)
-settings.setFillOptions(unmatchedHEtaHist, root.kBlue, 1, 2, 1)
-
 #==================================================================================
 # Draw Plots //////////////////////////////////////////////////////////////////////
 #==================================================================================
@@ -229,6 +213,10 @@ histVec.append([jet3SumHist, "hist"])
 
 histVec.append([hMatchHist, "hist"])
 histVec.append([unmatchedHEtaHist, "hist"])
+
+# adjust histogram settings
+for ihist in range(len(histVec) ):
+   settings.setFillOptions(histVec[ihist][0], root.kBlue, 1, 2, 1)
 
 # draw and save the histograms
 settings.drawHist(histVec, True, False)
