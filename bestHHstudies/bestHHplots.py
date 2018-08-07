@@ -1,5 +1,5 @@
 #++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-# ExamplePlots.py /////////////////////////////////////////////////////////////////
+# bestHHplots.py /////////////////////////////////////////////////////////////////
 #==================================================================================
 # This program reads data from a file and makes histograms ////////////////////////
 #==================================================================================
@@ -7,11 +7,13 @@
 # Give interpreter a search path
 
 # modules
+import sys
 import ROOT as root
 import numpy
 import root_numpy
 
-# import modules from other directories
+# import modules from plot module directories
+sys.path.append('../')
 import style.histogramsettings as settings
 import fitting.rootpdfs as pdf
 import fitting.fitwithroot as fit

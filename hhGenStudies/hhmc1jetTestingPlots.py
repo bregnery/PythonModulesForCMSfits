@@ -1,5 +1,5 @@
 #++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-# hhmc2jetsTestingPlots.py ////////////////////////////////////////////////////////
+# hhmcTestingPlots.py /////////////////////////////////////////////////////////////
 #==================================================================================
 # This program reads data from a file and makes histograms ////////////////////////
 #==================================================================================
@@ -7,11 +7,13 @@
 # Give interpreter a search path
 
 # modules
+import sys
 import ROOT as root
 import numpy
 import root_numpy
 
 # import modules from other directories
+sys.path.append('../'
 import style.histogramsettings as settings
 import fitting.rootpdfs as pdf
 import fitting.fitwithroot as fit
@@ -90,39 +92,21 @@ settings.setHistTitles(nJetsAK4Hist, "Number of AK4 Jets", "Number of Events")
 nVerticesHist = root.TH1F("nVerticesHist","Number of Primary Vertices",51,-0.5,50.5)
 settings.setHistTitles(nVerticesHist, "Number of Vertices", "Number of Events")
 
-# When there are two jets
-leadTwoJetSDMassHist = root.TH1F("leadTwoJetSDMassHist","(nJets = 2) Leading AK8 Jet SoftDrop Mass",30,0,300)
-settings.setHistTitles(leadTwoJetSDMassHist, "SoftDrop Mass [GeV/c^{2}]", "Number of Events")
+## for when there is only one jet
+onlyJetSDMassHist = root.TH1F("onlyJetSDMassHist","AK8 Jet SoftDrop Mass",30,0,300)
+settings.setHistTitles(onlyJetSDMassHist, "SoftDrop Mass [GeV/c^{2}]", "Number of Events")
 
-leadTwoJetPtHist = root.TH1F("leadTwoJetPtHist","(nJets = 2) Leading AK8 Jet Pt",30,0,2500)
-settings.setHistTitles(leadTwoJetPtHist, "p_{T} [GeV/c]", "Number of Events")
+onlyJetPtHist = root.TH1F("onlyJetPtHist","AK8 Jet Pt",30,0,2500)
+settings.setHistTitles(onlyJetPtHist, "p_{T} [GeV/c]", "Number of Events")
 
-leadTwoJetEtaHist = root.TH1F("leadTwoJetEtaHist","(nJets = 2) Leading AK8 Jet |#eta|",20,0,5)
-settings.setHistTitles(leadTwoJetEtaHist, "|#eta|", "Number of Events")
+onlyJetEtaHist = root.TH1F("onlyJetEtaHist","AK8 Jet |#eta|",20,0,5)
+settings.setHistTitles(onlyJetEtaHist, "|#eta|", "Number of Events")
 
-leadTwoJetPhiHist = root.TH1F("leadTwoJetPhiHist","(nJets = 2) Leading AK8 Jet #phi",15,-3.5,3.5)
-settings.setHistTitles(leadTwoJetPhiHist, "#phi", "Number of Events")
+onlyJetPhiHist = root.TH1F("onlyJetPhiHist","AK8 Jet #phi",15,-3.5,3.5)
+settings.setHistTitles(onlyJetPhiHist, "#phi", "Number of Events")
 
-leadTwoJetMassHist = root.TH1F("leadTwoJetMassHist","(nJets = 2) Leading AK8 Jet 4 Vector Mass",30,0,300)
-settings.setHistTitles(leadTwoJetMassHist, "Mass [GeV/c^{2}]", "Number of Events")
-
-subleadTwoJetSDMassHist = root.TH1F("subleadTwoJetSDMassHist","(nJets = 2) Subleading AK8 Jet SoftDrop Mass",30,0,300)
-settings.setHistTitles(subleadTwoJetSDMassHist, "SoftDrop Mass [GeV/c^{2}]", "Number of Events")
-
-subleadTwoJetSDMassZoomHist = root.TH1F("subleadTwoJetSDMassZoomHist","(nJets = 2) Subleading AK8 Jet SoftDrop Mass",30,0,10)
-settings.setHistTitles(subleadTwoJetSDMassZoomHist, "SoftDrop Mass [GeV/c^{2}]", "Number of Events")
-
-subleadTwoJetPtHist = root.TH1F("subleadTwoJetPtHist","(nJets = 2) Subleading AK8 Jet Pt",30,0,2000)
-settings.setHistTitles(subleadTwoJetPtHist, "p_{T} [GeV/c]", "Number of Events")
-
-subleadTwoJetEtaHist = root.TH1F("subleadTwoJetEtaHist","(nJets = 2) Subleading AK8 Jet |#eta|",20,0,5)
-settings.setHistTitles(subleadTwoJetEtaHist, "|#eta|", "Number of Events")
-
-subleadTwoJetPhiHist = root.TH1F("subleadTwoJetPhiHist","(nJets = 2) Subleading AK8 Jet #phi",15,-3.5,3.5)
-settings.setHistTitles(subleadTwoJetPhiHist, "#phi", "Number of Events")
-
-subleadTwoJetMassHist = root.TH1F("subleadTwoJetMassHist","(nJets = 2) Subleading AK8 Jet 4 Vector Mass",30,0,300)
-settings.setHistTitles(subleadTwoJetMassHist, "Mass [GeV/c^{2}]", "Number of Events")
+onlyJetMassHist = root.TH1F("onlyJetMassHist","AK8 Jet 4 Vector Mass",30,0,300)
+settings.setHistTitles(onlyJetMassHist, "Mass [GeV/c^{2}]", "Number of Events")
 
 
 # fill the histograms
@@ -131,25 +115,12 @@ for event in range(len(leadJetSDmass) ):
       diHiggsDeltaR = deltaR(genHiggs1eta[event], genHiggs1phi[event], genHiggs2eta[event], genHiggs2phi[event] )
       diHiggsDeltaRHist.Fill(diHiggsDeltaR)  
 
-   if nJets[event] > 0 :
-      nHiggsHist.Fill(nGenHiggs[event]) 
-      nJetsHist.Fill(nJets[event])
-      nJetsAK4Hist.Fill(nJetsAK4[event])
-      nVerticesHist.Fill(nVertices[event])
-   
-   if nJets[event] == 2 :
-      leadTwoJetSDMassHist.Fill(leadJetSDmass[event])
-      leadTwoJetPtHist.Fill(leadJetPt[event])
-      leadTwoJetEtaHist.Fill(numpy.absolute(leadJetEta[event]))
-      leadTwoJetPhiHist.Fill(leadJetPhi[event])
-      leadTwoJetMassHist.Fill(leadJetMass[event])
-   
-      subleadTwoJetSDMassHist.Fill(subleadJetSDmass[event])
-      subleadTwoJetSDMassZoomHist.Fill(subleadJetSDmass[event])
-      subleadTwoJetPtHist.Fill(subleadJetPt[event])
-      subleadTwoJetEtaHist.Fill(numpy.absolute(subleadJetEta[event]))
-      subleadTwoJetPhiHist.Fill(subleadJetPhi[event])
-      subleadTwoJetMassHist.Fill(subleadJetMass[event])
+   if nJets[event] == 1 :
+      onlyJetSDMassHist.Fill(leadJetSDmass[event])
+      onlyJetPtHist.Fill(leadJetPt[event])
+      onlyJetEtaHist.Fill(numpy.absolute(leadJetEta[event]))
+      onlyJetPhiHist.Fill(leadJetPhi[event])
+      onlyJetMassHist.Fill(leadJetMass[event])
 
 #   if nJets[event] == 3 :
 #   if nJets[event] == 4 :
@@ -162,20 +133,12 @@ settings.setFillOptions(nJetsHist, root.kBlue, 1, 2, 1)
 settings.setFillOptions(nJetsAK4Hist, root.kBlue, 1, 2, 1)
 settings.setFillOptions(nVerticesHist, root.kBlue, 1, 2, 1)
 
-# when there are two jets in an event
-settings.setFillOptions(leadTwoJetSDMassHist, root.kBlue, 1, 2, 1)
-settings.setFillOptions(leadTwoJetPtHist, root.kBlue, 1, 2, 1)
-settings.setFillOptions(leadTwoJetEtaHist, root.kBlue, 1, 2, 1)
-settings.setFillOptions(leadTwoJetPhiHist, root.kBlue, 1, 2, 1)
-settings.setFillOptions(leadTwoJetMassHist, root.kBlue, 1, 2, 1)
-
-settings.setFillOptions(subleadTwoJetSDMassHist, root.kBlue, 1, 2, 1)
-settings.setFillOptions(subleadTwoJetSDMassZoomHist, root.kBlue, 1, 2, 1)
-settings.setFillOptions(subleadTwoJetPtHist, root.kBlue, 1, 2, 1)
-settings.setFillOptions(subleadTwoJetEtaHist, root.kBlue, 1, 2, 1)
-settings.setFillOptions(subleadTwoJetPhiHist, root.kBlue, 1, 2, 1)
-settings.setFillOptions(subleadTwoJetMassHist, root.kBlue, 1, 2, 1)
-
+# when there is only one jet in an event
+settings.setFillOptions(onlyJetSDMassHist, root.kBlue, 1, 2, 1)
+settings.setFillOptions(onlyJetPtHist, root.kBlue, 1, 2, 1)
+settings.setFillOptions(onlyJetEtaHist, root.kBlue, 1, 2, 1)
+settings.setFillOptions(onlyJetPhiHist, root.kBlue, 1, 2, 1)
+settings.setFillOptions(onlyJetMassHist, root.kBlue, 1, 2, 1)
 
 #==================================================================================
 # Fit the Histograms //////////////////////////////////////////////////////////////
@@ -209,40 +172,22 @@ nJetsAK4Hist.Draw("hist")
 nVerticesCanvas = root.TCanvas()
 nVerticesHist.Draw("hist")
 
-# when there are two jets in an event
-leadTwoJetSDMassCanvas = root.TCanvas()
-leadTwoJetSDMassHist.Draw("hist")
+# when there is only one jet in an event
 
-leadTwoJetPtCanvas = root.TCanvas()
-leadTwoJetPtHist.Draw("hist")
+onlycanvas = root.TCanvas()
+onlyJetSDMassHist.Draw("hist")
 
-leadTwoJetEtaCanvas = root.TCanvas()
-leadTwoJetEtaHist.Draw("hist")
+onlyJetPtCanvas = root.TCanvas()
+onlyJetPtHist.Draw("hist")
 
-leadTwoJetPhiCanvas = root.TCanvas()
-leadTwoJetPhiHist.Draw("hist")
+onlyJetEtaCanvas = root.TCanvas()
+onlyJetEtaHist.Draw("hist")
 
-leadTwoJetMassCanvas = root.TCanvas()
-leadTwoJetMassHist.Draw("hist")
+onlyJetPhiCanvas = root.TCanvas()
+onlyJetPhiHist.Draw("hist")
 
-subleadTwoJetSDMassCanvas = root.TCanvas()
-subleadTwoJetSDMassHist.Draw("hist")
-
-subleadTwoJetSDMassZoomCanvas = root.TCanvas()
-subleadTwoJetSDMassZoomHist.Draw("hist")
-
-subleadTwoJetPtCanvas = root.TCanvas()
-subleadTwoJetPtHist.Draw("hist")
-
-subleadTwoJetEtaCanvas = root.TCanvas()
-subleadTwoJetEtaHist.Draw("hist")
-
-subleadTwoJetPhiCanvas = root.TCanvas()
-subleadTwoJetPhiHist.Draw("hist")
-
-subleadTwoJetMassCanvas = root.TCanvas()
-subleadTwoJetMassHist.Draw("hist")
-
+onlyJetMassCanvas = root.TCanvas()
+onlyJetMassHist.Draw("hist")
 
 # make a TCanvas and a histogram plot with residuals
 #residualCanvas = root.TCanvas("residualCanvas", "residualCanvas")
@@ -257,17 +202,10 @@ nJetsCanvas.SaveAs("Hist_nJets.png")
 nJetsAK4Canvas.SaveAs("Hist_nJetsAK4.png")
 nVerticesCanvas.SaveAs("Hist_nVertices.png")
 
-# When there are two jets in an event	
-leadTwoJetSDMassCanvas.SaveAs("Hist_LeadTwoJetSDmass.png")
-leadTwoJetPtCanvas.SaveAs("Hist_LeadTwoJetPt.png")
-leadTwoJetEtaCanvas.SaveAs("Hist_LeadTwoJetEta.png")
-leadTwoJetPhiCanvas.SaveAs("Hist_LeadTwoJetPhi.png")
-leadTwoJetMassCanvas.SaveAs("Hist_LeadTwoJetMass.png")
-
-subleadTwoJetSDMassCanvas.SaveAs("Hist_SubLeadTwoJetSDmass.png")
-subleadTwoJetSDMassZoomCanvas.SaveAs("Hist_SubLeadTwoJetSDmassZoom.png")
-subleadTwoJetPtCanvas.SaveAs("Hist_SubLeadTwoJetPt.png")
-subleadTwoJetEtaCanvas.SaveAs("Hist_SubLeadTwoJetEta.png")
-subleadTwoJetPhiCanvas.SaveAs("Hist_SubLeadTwoJetPhi.png")
-subleadTwoJetMassCanvas.SaveAs("Hist_SubLeadTwoJetMass.png")
+# When there is only one jet in an event
+onlycanvas.SaveAs("Hist_OnlyJetSDmass.png")
+onlyJetPtCanvas.SaveAs("Hist_OnlyJetPt.png")
+onlyJetEtaCanvas.SaveAs("Hist_OnlyJetEta.png")
+onlyJetPhiCanvas.SaveAs("Hist_OnlyJetPhi.png")
+onlyJetMassCanvas.SaveAs("Hist_OnlyJetMass.png")
 
