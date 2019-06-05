@@ -39,8 +39,8 @@ fileList.append(root.TFile("../data/calFile_CFG_THR_ARM_DAC_GE11-X-S-FRASCATI-00
 fileList.append(root.TFile("../data/calFile_CFG_THR_ARM_DAC_GE11-X-S-FRASCATI-0008_5-23-9-11.root") )
 
 # Save the dates
-date = ["22-16", "22-18", "22-20", "22-22", "22-23", "23-6", "23-9"]
-y_pos = np.arange(len(date))
+date = ["", "22-16", "22-18", "22-20", "22-22", "22-23", "23-6", "23-9", ""]
+y_pos = np.arange(7)
 
 # Save the VFAT IDs
 vfatN = list(range(24))
@@ -50,36 +50,66 @@ vfatID = ["vfatN0_vfatID6471", "vfatN1_vfatID6135", "vfatN2_vfatID6309", "vfatN3
           "vfatN15_vfatID6517", "vfatN16_vfatID6407", "vfatN17_vfatID6137", "vfatN18_vfatID6368", "vfatN19_vfatID6286",
           "vfatN20_vfatID6428", "vfatN21_vfatID6152", "vfatN22_vfatID6379", "vfatN23_vfatID6140"]
 
-# Get Scurve Ensemble Mean and Sigma for VFAT 17, ID 6137, threshold DAC 17
-ensMean = []
-ensSigma = []
-for ivfat in range(len(vfatN) ) :
-   tmpEnsMean =[]
-   tmpEnsSigma =[]
-   for ifile in fileList :
-      meanDistr = ifile.Get("VFAT" + str(ivfat) + "/RawData/ScurveMean/gScurveMeanDist_" + vfatID[ivfat] + "_thrDAC17.0")
-      sigmaDistr = ifile.Get("VFAT" + str(ivfat) + "/RawData/ScurveSigma/gScurveSigmaDist_" + vfatID[ivfat] + "_thrDAC17.0")
-      tmpEnsMean.append(meanDistr.GetMean() )
-      tmpEnsSigma.append(sigmaDistr.GetMean() )
-   ensMean.append(tmpEnsMean)
-   print "Ensemble mean: ", tmpEnsMean
-   ensSigma.append(tmpEnsSigma)
+# Save DAC values and limits for the plot x axis
+thrDAC = ["17", "20", "23", "25", "30", "40", "50", "60", "70"]
+xlim = [[-6,10],[-6,10],[-6,10],[-6,10],[-5,10],[0,10],[4,15],[4,15],[4,15]]
 
 #==================================================================================
-# Make Graphs /////////////////////////////////////////////////////////////////////
+# Loop over DAC values ////////////////////////////////////////////////////////////
 #==================================================================================
 
-# plot VFAT 17, DAC 17.0
-plt.figure(1)
-plt.errorbar(ensMean, y_pos, xerr=ensSigma, marker='s', mfc='black', mec='black', ms=10, mew=2, ls='')
-plt.yticks(y_pos, date)
-plt.ylim([-1, 7])
-plt.ylabel('Time of ARM DAC Calibration (day, hour)')
-plt.xlabel('Mean of Ensemble of S Curves')
-plt.title('VFAT 17  DAC=17 S-Curve Ensemble Mean vs Time')
-plt.savefig('VFAT17_DAC17_armDacCalibrationStudy.png')
-plt.savefig('VFAT17_DAC17_armDacCalibrationStudy.pdf')
+for iDAC in range(len(thrDAC) ) :
 
+   # Get Scurve Ensemble Mean and Sigma for each DAC
+   ensMean = []
+   ensSigma = []
+   #print thrDAC[iDAC]
+   for ivfat in range(len(vfatN) ) :
+      tmpEnsMean =[]
+      tmpEnsSigma =[]
+      for ifile in fileList :
+         meanDistr = ifile.Get("VFAT" + str(ivfat) + "/RawData/ScurveMean/gScurveMeanDist_" + vfatID[ivfat] + "_thrDAC" + thrDAC[iDAC] + ".0")
+         sigmaDistr = ifile.Get("VFAT" + str(ivfat) + "/RawData/ScurveSigma/gScurveSigmaDist_" + vfatID[ivfat] + "_thrDAC" + thrDAC[iDAC] + ".0")
+         tmpEnsMean.append(meanDistr.GetMean() )
+         tmpEnsSigma.append(sigmaDistr.GetMean() )
+      ensMean.append(tmpEnsMean)
+      ensSigma.append(tmpEnsSigma)
 
+   #==================================================================================
+   # Make Graphs /////////////////////////////////////////////////////////////////////
+   #==================================================================================
+
+   # plot VFAT mean values for each DAC by using subplots
+   fig, axs = plt.subplots(3, 8, figsize = (40,30) )
+   rowN, colN = 0, 0
+   for ivfat in range(len(vfatN) ) :
+      # get the correct rows and columns
+      if colN == 8: rowN += 1
+      if colN == 8: colN = 0
+  
+      # plot each VFAT time vs ensemble mean 
+      axs[rowN, colN].errorbar(ensMean[ivfat], y_pos, xerr=ensSigma[ivfat], marker='s', mfc='black', mec='black', ms=10, mew=2, ls='')
+      axs[rowN, colN].plot([0,0], [-1,7], '-.r', lw=3)
+      axs[rowN, colN].set_title('VFAT ' + str(ivfat) )
+ 
+      colN += 1
+
+   for ax in axs.flat:
+      ax.set_yticklabels(date)
+      ax.set_ylim([-1, 7])
+      ax.set_xlim(xlim[iDAC])
+
+   # make the figure pretty
+   fig.tight_layout(rect=[0.05, 0.03, 0.97, 0.95]) # makes space between plots
+   fig.suptitle('CFG_THR_ARM_DAC='+ thrDAC[iDAC] + ' Time vs. S-Curve Ensemble Mean', fontsize=32)
+   fig.text(0.5, 0.02, 'Mean of Ensemble of S-Curves [fC]', ha='center', fontsize=28)
+   fig.text(0.02, 0.5, 'Time of ARM DAC Calibration (day, hour)', va='center', rotation='vertical', fontsize=28)
+
+   # save the figure
+   fig.savefig('DAC' + thrDAC[iDAC] + '_armDacCalibrationStudy.png')
+   fig.savefig('DAC' + thrDAC[iDAC] + '_armDacCalibrationStudy.pdf')
+
+print "Made plots for each VFAT and each DAC value"
+print "Program was a great success!!!"
 
 
